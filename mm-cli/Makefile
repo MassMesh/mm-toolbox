@@ -25,7 +25,7 @@ PKG_RELEASE:=1
 PKG_LICENSE:=GPL-3.0
 PKG_LICENSE_FILES:=LICENSE
 
-PKG_INSTALL:=1
+# PKG_INSTALL:=1
 
 include $(INCLUDE_DIR)/package.mk
 
@@ -45,12 +45,17 @@ endef
 
 
 define Build/Compile
+
 endef
 
 
 define Package/mm-toolbox/install
-	$(INSTALL_DIR) $(1)/usr/bin
-	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/bin/$(PKG_NAME) $(1)/usr/bin/
+	$(INSTALL_DIR) \
+		$(1)/usr/bin
+
+	$(INSTALL_BIN) \
+		./files/mm \
+		$(1)/usr/bin
 endef
 
 
