@@ -20,7 +20,7 @@ PKG_USE_MIPS16:=0
 
 GO_PKG:=github.com/cure/autoygg
 GO_PKG_BUILD_PKG:=github.com/cure/autoygg/cmd/...
-## typo
+
 
 include $(INCLUDE_DIR)/package.mk
 include ../../lang/golang/golang-package.mk
