@@ -35,7 +35,7 @@ define Package/autoygg-go
 endef
 
 define Package/autoygg-go/description
- Autoygg is a tool to automatically configure an internet egress node on an yggdrasil network.
+Autoygg is a tool to automatically configure an internet egress node on an yggdrasil network.
  There is a server component (autoygg-server) which acts as egress gatekeeper on an yggdrasil
  node with internet access (e.g. a VPS in the cloud). It has a REST api that is consumed by
  the client component (autoygg-client). The client can register with the server for internet
@@ -54,11 +54,11 @@ define Package/autoygg-go/install
 		$(1)/usr/sbin
 
 	$(INSTALL_BIN) \
-		$(GO_PKG_BUILD_BIN_DIR)/cmd/autoygg-client \
+		$(GO_PKG_BUILD_BIN_DIR)/cmd/autoygg-client/autoygg-client \
 		$(1)/usr/sbin
 
 	$(INSTALL_BIN) \
-		$(GO_PKG_BUILD_BIN_DIR)/cmd/autoygg-server \
+		$(GO_PKG_BUILD_BIN_DIR)/cmd/autoygg-server/autoygg-server \
 		$(1)/usr/sbin
 endef
 
