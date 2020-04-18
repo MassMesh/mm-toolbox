@@ -23,7 +23,7 @@ GO_PKG_BUILD_PKG:=github.com/cure/autoygg/cmd/...
 
 
 include $(INCLUDE_DIR)/package.mk
-include ../lang/golang/golang-package.mk
+# include ../../lang/golang/golang-package.mk
 
 define Package/autoygg-go
 	SECTION:=net
