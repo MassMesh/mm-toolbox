@@ -4,10 +4,12 @@ PKG_NAME:=autoygg-go
 PKG_VERSION:=1.0.42
 PKG_RELEASE:=1
 
+PKG_SOURCE_PROTO:=git
+PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=https://github.com/cure/autoygg.git
-# PKG_HASH:=c82ba4020276f85f53ecd8ccb08db4c79ac0a1a23c1011140ca8585721ae9008
-PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-go-$(PKG_VERSION)
+PKG_HASH:=c82ba4020276f85f53ecd8ccb08db4c79ac0a1a23c1011140ca8585721ae9008
+# PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-go-$(PKG_VERSION)
 
 PKG_MAINTAINER:=William Fleurant <meshnet@protonmail.com>
 PKG_LICENSE:=GPL-3.0
@@ -26,9 +28,9 @@ GO_PKG_BUILD_PKG:=github.com/cure/autoygg/cmd/...
 #   github.com/yggdrasil-network/yggdrasil-go/src/version.buildVersion=$(PKG_VERSION)
 
 include $(INCLUDE_DIR)/package.mk
-include ../../lang/golang/golang-package.mk
+# include ../../lang/golang/golang-package.mk
 
-define Package/yggdrasil
+define Package/autoygg-go
 	SECTION:=net
 	CATEGORY:=Network
 	SUBMENU:=Routing and Redirection
@@ -37,7 +39,7 @@ define Package/yggdrasil
 	DEPENDS:=$(GO_ARCH_DEPENDS) yggdrasil
 endef
 
-define Package/yggdrasil/description
+define Package/autoygg-go/description
  Autoygg is a tool to automatically configure an internet egress node on an yggdrasil network.
  There is a server component (autoygg-server) which acts as egress gatekeeper on an yggdrasil
  node with internet access (e.g. a VPS in the cloud). It has a REST api that is consumed by
@@ -48,22 +50,22 @@ define Package/yggdrasil/description
  end-to-end encrypted until the point of egress to the internet.
 endef
 
-# define Package/yggdrasil/conffiles
+# define Package/autoygg-go/conffiles
 #  /etc/config/yggdrasil
 # endef
 
-define Package/yggdrasil/install
+define Package/autoygg-go/install
 	$(INSTALL_DIR) \
 		$(1)/usr/sbin
 
- 	$(INSTALL_BIN) \
- 		$(GO_PKG_BUILD_BIN_DIR)/cmd/autoygg-client \
- 		$(1)/usr/sbin
+# 	$(INSTALL_BIN) \
+# 		$(GO_PKG_BUILD_BIN_DIR)/cmd/autoygg-client \
+# 		$(1)/usr/sbin
 
- 	$(INSTALL_BIN) \
- 		$(GO_PKG_BUILD_BIN_DIR)/cmd/autoygg-server \
- 		$(1)/usr/sbin
+# 	$(INSTALL_BIN) \
+# 		$(GO_PKG_BUILD_BIN_DIR)/cmd/autoygg-server \
+# 		$(1)/usr/sbin
 endef
 
-$(eval $(call GoBinPackage,autoygg))
-$(eval $(call BuildPackage,autoygg))
+$(eval $(call GoBinPackage,autoygg-go))
+$(eval $(call BuildPackage,autoygg-go))
