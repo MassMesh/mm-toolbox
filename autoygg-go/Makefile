@@ -46,7 +46,7 @@ define Package/autoygg-go/description
 endef
 
 define Package/autoygg-go/conffiles
- /etc/autoygg.db
+	/etc/autoygg.db
 endef
 
 define Package/autoygg-go/install
