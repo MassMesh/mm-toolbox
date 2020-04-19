@@ -6,7 +6,7 @@ PKG_RELEASE:=1
 
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
-PKG_SOURCE_URL:=https://codeload.github.com/cure/autoygg/tar.gz/v$(PKG_VERSION)?
+PKG_SOURCE_URL:=https://codeload.github.com/massmesh/autoygg/tar.gz/v$(PKG_VERSION)?
 PKG_HASH:=10d1fd4a5c2236731f35388253b7bde128f826de7888fd09431d619073570041
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(PKG_VERSION)
 
@@ -18,8 +18,8 @@ PKG_BUILD_DEPENDS:=golang/host
 PKG_BUILD_PARALLEL:=1
 PKG_USE_MIPS16:=0
 
-GO_PKG:=github.com/cure/autoygg
-GO_PKG_BUILD_PKG:=github.com/cure/autoygg/cmd/...
+GO_PKG:=github.com/massmesh/autoygg
+GO_PKG_BUILD_PKG:=github.com/massmesh/autoygg/cmd/.../...
 
 
 include $(INCLUDE_DIR)/package.mk
@@ -31,7 +31,7 @@ define Package/autoygg-go
 	CATEGORY:=Network
 	SUBMENU:=Routing and Redirection
 	TITLE:=Automatically configure egress through a yggdrasil network
-	URL:=https://github.com/cure/autoygg
+	URL:=https://github.com/massmesh/autoygg
 	DEPENDS:=$(GO_ARCH_DEPENDS) yggdrasil
 endef
 
