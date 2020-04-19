@@ -53,13 +53,13 @@ endef
 define Package/autoygg-go/install
 	$(INSTALL_DIR) \
 		$(1)/usr/sbin
-
+/dev/shm/openwrt-sdk-x86-64_gcc-8.4.0_musl.Linux-x86_64/build_dir/target-x86_64_musl/autoygg-0.1.0/.go_work/build/bin/cmd/autoygg-client/autoygg-client
 	$(INSTALL_BIN) \
-		$(GO_PKG_BUILD_BIN_DIR)/cmd/autoygg-client/autoygg-client \
+		$(GO_PKG_BUILD_BIN_DIR)/autoygg-client \
 		$(1)/usr/sbin
 
 	$(INSTALL_BIN) \
-		$(GO_PKG_BUILD_BIN_DIR)/cmd/autoygg-server/autoygg-server \
+		$(GO_PKG_BUILD_BIN_DIR)/autoygg-server \
 		$(1)/usr/sbin
 endef
 
