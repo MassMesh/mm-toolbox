@@ -1,7 +1,0 @@
-#!/bin/sh
-
-PKG_VERSION=0.0.1
-
-echo "[MassMesh] Version v${PKG_VERSION}"
-
-exit 0
