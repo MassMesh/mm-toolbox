@@ -15,6 +15,7 @@
 
 include $(TOPDIR)/rules.mk
 
+TITLE:=mm-cli
 PKG_NAME:=mm-cli
 PKG_VERSION:=0.0.1
 PKG_RELEASE:=1
