@@ -19,45 +19,31 @@ PKG_NAME:=mm-cli
 PKG_VERSION:=0.0.1
 PKG_RELEASE:=1
 
-# PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.bz2
-# PKG_SOURCE_URL:=https://www.massmesh.org/pub/
+PYPI_NAME:=$(PKG_NAME)
+PYPI_SOURCE_NAME:=mm-cli
+PKG_HASH:=2e49511baf7c4430d0e6bdcac12f401ff869360b7e6e407cef320c6424aaaf34
 
-PKG_LICENSE:=GPL-3.0
+PKG_MAINTAINER:= William Fleurant <info@massmesh.org>
+PKG_LICENSE:=GNU-3
 PKG_LICENSE_FILES:=LICENSE
 
-# PKG_INSTALL:=1
-
+include ../pypi.mk
 include $(INCLUDE_DIR)/package.mk
+include ../python3-package.mk
 
-
-define Package/mm-toolbox
-	CATEGORY:=Administration
-	MAINTAINER:=William Fleurant <igel@bostonmesh.net>
-	SECTION:=admin
-	TITLE:=Massachusetts Meshnet toolbox package
-	URL:=https://github.com/MassMesh/mm-toolbox
+define Package/python3-mm-cli
+  SECTION:=lang
+  CATEGORY:=Languages
+  SUBMENU:=Python
+  TITLE:=mm-cli
+  URL:=https://pypi.org/project/mm-cli/
+  DEPENDS:=+python3-light
 endef
 
-
-define Package/mm-toolbox/description
-	Description of the Massachusetts Meshnet toolbox package
+define Package/python3-mm-cli/description
+  A CLI application for connecting to the mesh.
 endef
 
-
-define Build/Compile
-
-endef
-
-
-define Package/mm-toolbox/install
-	$(INSTALL_DIR) \
-		$(1)/usr/bin
-
-	$(INSTALL_BIN) \
-		./files/mm \
-		$(1)/usr/bin
-endef
-
-
-$(eval $(call BuildPackage,mm-toolbox))
-
+$(eval $(call Py3Package,python3-mm-cli))
+$(eval $(call BuildPackage,python3-mm-cli))
+$(eval $(call BuildPackage,python3-mm-cli-src))
