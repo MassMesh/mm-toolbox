@@ -34,7 +34,7 @@ PKG_UNPACK=$(HOST_TAR) -C $(PKG_BUILD_DIR) --strip-components=1 -xzf $(DL_DIR)/$
 
 include ../pypi.mk
 include $(INCLUDE_DIR)/package.mk
-include ../python3-package.mk
+include $(TOPDIR)/feeds/packages/lang/python/python3-package.mk
 
 define Package/python3-mm-cli
   SECTION:=lang
