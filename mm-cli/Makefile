@@ -12,6 +12,7 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
 
 include $(TOPDIR)/rules.mk
 
@@ -28,6 +29,9 @@ PKG_MAINTAINER:= William Fleurant <info@massmesh.org>
 PKG_LICENSE:=GNU-3
 PKG_LICENSE_FILES:=LICENSE
 
+PKG_BUILD_DIR:=$(BUILD_DIR)/$(BUILD_VARIANT)-$(PKG_NAME)-$(PKG_VERSION)
+PKG_UNPACK=$(HOST_TAR) -C $(PKG_BUILD_DIR) --strip-components=1 -xzf $(DL_DIR)/$(PKG_SOURCE)
+
 include ../pypi.mk
 include $(INCLUDE_DIR)/package.mk
 include ../python3-package.mk
@@ -36,9 +40,10 @@ define Package/python3-mm-cli
   SECTION:=lang
   CATEGORY:=Languages
   SUBMENU:=Python
-  TITLE:=mm-cli
+  TITLE:=python3-mm-cli
   URL:=https://pypi.org/project/mm-cli/
   DEPENDS:=+python3-light
+  VARIANT:=python3
 endef
 
 define Package/python3-mm-cli/description
@@ -47,4 +52,3 @@ endef
 
 $(eval $(call Py3Package,python3-mm-cli))
 $(eval $(call BuildPackage,python3-mm-cli))
-$(eval $(call BuildPackage,python3-mm-cli-src))
