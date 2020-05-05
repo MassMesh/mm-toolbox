@@ -43,13 +43,13 @@ If you want to track another branch, add `;branchname` to the url, e.g. for the 
 Update the feeds
 
 ```
-  ./script/feeds update
+  ./scripts/feeds update
 ```
 
 Install the yggdrasil and autoygg-go feeds
 
 ```
-  ./script/feeds install yggdrasil autoygg-go
+  ./scripts/feeds install yggdrasil autoygg-go
 ```
 
 Generate a basic .config file. Open menuconfig and then select 'Global build settings' and disable 'Cryptographically sign package lists'. Exit and save config.
