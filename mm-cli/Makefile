@@ -17,7 +17,7 @@ include $(TOPDIR)/rules.mk
 
 TITLE:=mm-cli
 PKG_NAME:=mm-cli
-PKG_VERSION:=0.0.1
+PKG_VERSION:=0.0.2
 PKG_RELEASE:=1
 
 PYPI_NAME:=$(PKG_NAME)
