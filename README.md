@@ -46,10 +46,11 @@ Update the feeds
   ./scripts/feeds update
 ```
 
-Install the yggdrasil and autoygg-go feeds
+Install the massmesh feeds
 
 ```
-  ./scripts/feeds install yggdrasil autoygg-go
+  ./scripts/feeds install yggdrasil autoygg-go # for autoygg
+  ./scripts/feeds install mm-cli               # for mm-cli
 ```
 
 Generate a basic .config file. Open menuconfig and then select 'Global build settings' and disable 'Cryptographically sign package lists'. Exit and save config.
