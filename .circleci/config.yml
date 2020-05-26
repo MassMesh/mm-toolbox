@@ -1,0 +1,59 @@
+version: 2.1
+
+jobs:
+  checkout_code:
+    docker:
+      - image: debian:buster
+    steps:
+      - run:
+          name: Install Dependencies
+          command: 'apt-get update && apt-get install -y ca-certificates build-essential'
+      - checkout
+      - save_cache:
+          key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+          paths:
+            - ./
+  build:
+    docker:
+      - image: debian:buster
+    parameters:
+      community:
+        type: string
+      profile:
+        type: string
+      device:
+        type: string
+      openwrt_url:
+        type: string
+      openwrt_dir:
+        type: string
+    steps:
+      - restore_cache:
+          key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+      - run:
+          name: get openwrt
+          command: 'curl -O << parameters.openwrt_url >> && tar xjf *tar.xz'
+      - run:
+          name: add massmesh source to feeds file
+          command: 'cd << parameters.openwrt_dir >> && echo "src-git massmesh https://github.com/massmesh/mm-toolbox.git" >> feeds.conf.default && ./scripts/feeds update && ./scripts feeds install yggdrasil autoygg-go && ./script/feeds install mm-cli'
+      - run:
+          name: tweak config
+          command: "make defconfig && sed -i 's/CONFIG_SIGNED_PACKAGES=y/# CONFIG_SIGNED_PACKAGES is not set/' .config"
+      - run:
+          name: Build << parameters.community >> << parameters.profile >> << parameters.device >>
+          command: 'make -j4'
+
+workflows:
+  version: 2
+  build-and-deploy:
+    jobs:
+      - checkout_code
+      - build:
+          name: build_1
+          community: massmesh
+          profile: meshnode
+          device: rpi-4
+          openwrt_url:  https://downloads.openwrt.org/snapshots/targets/brcm2708/bcm2711/openwrt-sdk-brcm2708-bcm2711_gcc-8.3.0_musl.Linux-x86_64.tar.xz
+          openwrt_dir: openwrt-sdk-brcm2708-bcm2711_gcc-8.3.0_musl.Linux-x86_64
+          requires:
+            - checkout_code
