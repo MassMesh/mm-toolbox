@@ -24,7 +24,7 @@ For the raspberry pi4:
 Unpack the OpenWRT SDK
 
 ```
-  tar xjf openwrt-sdk-x86-64_gcc-8.4.0_musl.Linux-x86_64.tar.xz
+  tar xJf openwrt-sdk-x86-64_gcc-8.4.0_musl.Linux-x86_64.tar.xz
   cd openwrt-sdk-x86-64_gcc-8.4.0_musl.Linux-x86_64
 ```
 
@@ -64,3 +64,4 @@ Finally, build (adjust the number of cores to something reasonable for your buil
 ```
   make -j4
 ```
+

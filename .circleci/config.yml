@@ -7,7 +7,7 @@ jobs:
     steps:
       - run:
           name: Install Dependencies
-          command: 'apt-get update && apt-get install -y ca-certificates build-essential'
+          command: 'apt-get update && apt-get install -y ca-certificates'
       - checkout
       - save_cache:
           key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
@@ -23,25 +23,36 @@ jobs:
         type: string
       device:
         type: string
+      arch:
+        type: string
       openwrt_url:
         type: string
       openwrt_dir:
         type: string
     steps:
+      - run:
+          name: Install Dependencies
+          command: 'apt-get update && apt-get install -y gnupg aria2 xz-utils make perl gcc g++ libncurses5-dev gawk unzip bzip2 wget python3 git file ca-certificates curl'
       - restore_cache:
           key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
       - run:
           name: get openwrt
-          command: 'curl -O << parameters.openwrt_url >> && tar xjf *tar.xz'
+          command: 'curl -O << parameters.openwrt_url >> && ls -laF *tar.xz && md5sum *tar.xz && tar xJf *tar.xz'
       - run:
           name: add massmesh source to feeds file
-          command: 'cd << parameters.openwrt_dir >> && echo "src-git massmesh https://github.com/massmesh/mm-toolbox.git" >> feeds.conf.default && ./scripts/feeds update && ./scripts feeds install yggdrasil autoygg-go && ./script/feeds install mm-cli'
+          command: 'cd << parameters.openwrt_dir >> && echo "src-git massmesh https://github.com/massmesh/mm-toolbox.git" >> feeds.conf.default && ./scripts/feeds update && ./scripts/feeds install yggdrasil autoygg-go && ./scripts/feeds install mm-cli'
       - run:
           name: tweak config
-          command: "make defconfig && sed -i 's/CONFIG_SIGNED_PACKAGES=y/# CONFIG_SIGNED_PACKAGES is not set/' .config"
+          command: "cd << parameters.openwrt_dir >> && make defconfig && sed -i 's/CONFIG_SIGNED_PACKAGES=y/# CONFIG_SIGNED_PACKAGES is not set/' .config"
       - run:
           name: Build << parameters.community >> << parameters.profile >> << parameters.device >>
-          command: 'make -j4'
+          command: 'cd << parameters.openwrt_dir >> && make -j3'
+      - add_ssh_keys:
+          fingerprints:
+            - "f6:6d:a4:c9:4e:93:86:41:57:7c:70:0c:27:fb:b9:be"
+      - deploy:
+          name: "Scp files to downloads.massmesh.net"
+          command: 'cd << parameters.openwrt_dir >> && export TMPDIR=`ssh -o "StrictHostKeyChecking=no" uploader@downloads.massmesh.net mktemp -d -p /home/uploader/uploads ci.XXXXXXXX` && ssh -o "StrictHostKeyChecking=no" uploader@downloads.massmesh.net mkdir -p $TMPDIR/<< parameters.device >>/ && scp -o "StrictHostKeyChecking=no" -pr bin/packages/<< parameters.arch >>/massmesh/*.ipk uploader@downloads.massmesh.net:$TMPDIR/<< parameters.device >>/ && ssh -o "StrictHostKeyChecking=no" uploader@downloads.massmesh.net touch $TMPDIR/<< parameters.device >>.arch.<< parameters.arch >> $TMPDIR/<< parameters.device >>.profile.<< parameters.profile >> $TMPDIR/<< parameters.device >>.uploaded'
 
 workflows:
   version: 2
@@ -53,7 +64,18 @@ workflows:
           community: massmesh
           profile: meshnode
           device: rpi-4
-          openwrt_url:  https://downloads.openwrt.org/snapshots/targets/brcm2708/bcm2711/openwrt-sdk-brcm2708-bcm2711_gcc-8.3.0_musl.Linux-x86_64.tar.xz
+          arch: aarch64_cortex-a72
+          openwrt_url: https://downloads.openwrt.org/snapshots/targets/brcm2708/bcm2711/openwrt-sdk-brcm2708-bcm2711_gcc-8.3.0_musl.Linux-x86_64.tar.xz
           openwrt_dir: openwrt-sdk-brcm2708-bcm2711_gcc-8.3.0_musl.Linux-x86_64
+          requires:
+            - checkout_code
+      - build:
+          name: build_2
+          community: massmesh
+          profile: meshnode
+          device: apu2
+          arch: x86_64
+          openwrt_url: https://downloads.openwrt.org/snapshots/targets/x86/64/openwrt-sdk-x86-64_gcc-8.4.0_musl.Linux-x86_64.tar.xz
+          openwrt_dir: openwrt-sdk-x86-64_gcc-8.4.0_musl.Linux-x86_64
           requires:
             - checkout_code
