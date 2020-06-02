@@ -41,7 +41,7 @@ define Package/python3-mm-cli
   SUBMENU:=Python
   TITLE:=python3-mm-cli
   URL:=https://pypi.org/project/mm-cli/
-  DEPENDS:=+python3-light
+  DEPENDS:=+python3-light +netaddr +argh
   VARIANT:=python3
 endef
 
