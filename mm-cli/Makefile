@@ -25,7 +25,7 @@ PYPI_SOURCE_NAME:=mm-cli
 PKG_HASH:=3c430eeb1ec487819dd3333c3c18ba0765dc1b7d0030697925c795536f372873
 
 PKG_MAINTAINER:= William Fleurant <info@massmesh.org>
-PKG_LICENSE:=GNU-3
+PKG_LICENSE:=GPL-3.0
 PKG_LICENSE_FILES:=LICENSE
 
 PKG_BUILD_DIR:=$(BUILD_DIR)/pypi/$(PKG_NAME)-$(BUILD_VARIANT)/$(PKG_NAME)-$(PKG_VERSION)
@@ -41,7 +41,7 @@ define Package/python3-mm-cli
   SUBMENU:=Python
   TITLE:=python3-mm-cli
   URL:=https://pypi.org/project/mm-cli/
-  DEPENDS:=+python3-light +netaddr +argh
+  DEPENDS:=+python3-light +python3-netaddr +python3-argh
   VARIANT:=python3
 endef
 
