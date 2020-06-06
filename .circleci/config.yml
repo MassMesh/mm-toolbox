@@ -60,7 +60,7 @@ workflows:
     jobs:
       - checkout_code
       - build:
-          name: build_1
+          name: build_rpi_4
           community: massmesh
           profile: meshnode
           device: rpi-4
@@ -70,7 +70,7 @@ workflows:
           requires:
             - checkout_code
       - build:
-          name: build_2
+          name: build_apu2
           community: massmesh
           profile: meshnode
           device: apu2
@@ -80,12 +80,12 @@ workflows:
           requires:
             - checkout_code
       - build:
-          name: build_3
+          name: build_rpi_b_plus
           community: massmesh
           profile: meshnode
           device: rpi
-          arch: arm_arm1176jzf-s_vfp
-          openwrt_url: https://downloads.openwrt.org/snapshots/targets/bcm27xx/bcm2708/openwrt-sdk-bcm27xx-bcm2708_gcc-8.4.0_musl_eabi.Linux-x86_64.tar.xz
-          openwrt_dir: openwrt-sdk-bcm27xx-bcm2708_gcc-8.4.0_musl_eabi.Linux-x86_64
+          arch: aarch64_cortex-a53
+          openwrt_url: https://downloads.cdn.openwrt.org/snapshots/targets/bcm27xx/bcm2710/openwrt-sdk-bcm27xx-bcm2710_gcc-8.4.0_musl.Linux-x86_64.tar.xz
+          openwrt_dir: openwrt-sdk-bcm27xx-bcm2710_gcc-8.4.0_musl.Linux-x86_64
           requires:
             - checkout_code
