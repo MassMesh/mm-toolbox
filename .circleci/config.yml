@@ -79,3 +79,13 @@ workflows:
           openwrt_dir: openwrt-sdk-x86-64_gcc-8.4.0_musl.Linux-x86_64
           requires:
             - checkout_code
+      - build:
+          name: build_3
+          community: massmesh
+          profile: meshnode
+          device: rpi
+          arch: arm_arm1176jzf-s_vfp
+          openwrt_url: https://downloads.openwrt.org/snapshots/targets/bcm27xx/bcm2708/openwrt-sdk-bcm27xx-bcm2708_gcc-8.4.0_musl_eabi.Linux-x86_64.tar.xz
+          openwrt_dir: openwrt-sdk-bcm27xx-bcm2708_gcc-8.4.0_musl_eabi.Linux-x86_64
+          requires:
+            - checkout_code
