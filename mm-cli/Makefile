@@ -18,7 +18,7 @@ include $(TOPDIR)/rules.mk
 TITLE:=mm-cli
 PKG_NAME:=mm-cli
 PKG_VERSION:=0.0.3
-PKG_RELEASE:=2
+PKG_RELEASE:=3
 
 PYPI_NAME:=$(PKG_NAME)
 PYPI_SOURCE_NAME:=mm-cli
@@ -49,10 +49,7 @@ define Package/python3-mm-cli/description
   A CLI application for connecting to the mesh.
 endef
 
-define Package/python3-mm-cli/install
-	$(INSTALL_DIR) $(1)/usr/bin
-	$(INSTALL_BIN) ./files/mm $(1)/usr/bin
-endef
-
 $(eval $(call Py3Package,python3-mm-cli))
 $(eval $(call BuildPackage,python3-mm-cli))
+$(eval $(call BuildPackage,python3-mm-cli-src))
+
