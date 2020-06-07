@@ -49,10 +49,7 @@ define Package/python3-mm-cli/description
   A CLI application for connecting to the mesh.
 endef
 
-define Package/python3-mm-cli/install
-	$(INSTALL_DIR) $(1)/usr/bin
-	$(INSTALL_BIN) ./files/mm $(1)/usr/bin
-endef
-
 $(eval $(call Py3Package,python3-mm-cli))
 $(eval $(call BuildPackage,python3-mm-cli))
+$(eval $(call BuildPackage,python3-mm-cli-src))
+
