@@ -52,7 +52,12 @@ jobs:
             - "f6:6d:a4:c9:4e:93:86:41:57:7c:70:0c:27:fb:b9:be"
       - deploy:
           name: "Scp files to downloads.massmesh.net"
-          command: 'cd << parameters.openwrt_dir >> && export TMPDIR=`ssh -o "StrictHostKeyChecking=no" uploader@downloads.massmesh.net mktemp -d -p /home/uploader/uploads ci.XXXXXXXX` && ssh -o "StrictHostKeyChecking=no" uploader@downloads.massmesh.net mkdir -p $TMPDIR/<< parameters.device >>/ && scp -o "StrictHostKeyChecking=no" -pr bin/packages/<< parameters.arch >>/massmesh/*.ipk uploader@downloads.massmesh.net:$TMPDIR/<< parameters.device >>/ && ssh -o "StrictHostKeyChecking=no" uploader@downloads.massmesh.net touch $TMPDIR/<< parameters.device >>.arch.<< parameters.arch >> $TMPDIR/<< parameters.device >>.profile.<< parameters.profile >> $TMPDIR/<< parameters.device >>.uploaded'
+          command: |
+            cd << parameters.openwrt_dir >>
+            export TMPDIR=`ssh -o "StrictHostKeyChecking=no" uploader@downloads.massmesh.net mktemp -d -p /home/uploader/package-uploads ci.XXXXXXXX`
+            ssh -o "StrictHostKeyChecking=no" uploader@downloads.massmesh.net mkdir -p $TMPDIR/<< parameters.device >>/
+            scp -o "StrictHostKeyChecking=no" -pr bin/packages/<< parameters.arch >>/massmesh/*.ipk uploader@downloads.massmesh.net:$TMPDIR/<< parameters.device >>/
+            ssh -o "StrictHostKeyChecking=no" uploader@downloads.massmesh.net touch $TMPDIR/<< parameters.device >>.arch.<< parameters.arch >> $TMPDIR/<< parameters.device >>.profile.<< parameters.profile >> $TMPDIR/<< parameters.device >>.branch.${CIRCLE_BRANCH} $TMPDIR/<< parameters.device >>.uploaded
 
 workflows:
   version: 2
@@ -60,7 +65,7 @@ workflows:
     jobs:
       - checkout_code
       - build:
-          name: build_1
+          name: build_rpi_4
           community: massmesh
           profile: meshnode
           device: rpi-4
@@ -70,12 +75,22 @@ workflows:
           requires:
             - checkout_code
       - build:
-          name: build_2
+          name: build_apu2
           community: massmesh
           profile: meshnode
           device: apu2
           arch: x86_64
           openwrt_url: https://downloads.openwrt.org/snapshots/targets/x86/64/openwrt-sdk-x86-64_gcc-8.4.0_musl.Linux-x86_64.tar.xz
           openwrt_dir: openwrt-sdk-x86-64_gcc-8.4.0_musl.Linux-x86_64
+          requires:
+            - checkout_code
+      - build:
+          name: build_rpi_b_plus
+          community: massmesh
+          profile: meshnode
+          device: rpi
+          arch: aarch64_cortex-a53
+          openwrt_url: https://downloads.cdn.openwrt.org/snapshots/targets/bcm27xx/bcm2710/openwrt-sdk-bcm27xx-bcm2710_gcc-8.4.0_musl.Linux-x86_64.tar.xz
+          openwrt_dir: openwrt-sdk-bcm27xx-bcm2710_gcc-8.4.0_musl.Linux-x86_64
           requires:
             - checkout_code

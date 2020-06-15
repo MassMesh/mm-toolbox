@@ -7,16 +7,22 @@ Install a few dependencies
   apt-get install gawk libncurses-dev
 ```
 
-Build this from the OpenWRT source snapshot for your target. E.g. for x86_64:
+Build this from the OpenWRT source snapshot for your target. E.g. for the apu2 (x86_64):
 
 ```
-  wget https://downloads.openwrt.org/snapshots/targets/x86/64/openwrt-sdk-x86-64_gcc-8.4.0_musl.Linux-x86_64.tar.xz
+  wget https://downloads.cdn.openwrt.org/snapshots/targets/x86/64/openwrt-sdk-x86-64_gcc-8.4.0_musl.Linux-x86_64.tar.xz
 ```
 
-For the raspberry pi4:
+For the raspberry pi 4:
 
 ```
-  wget https://downloads.openwrt.org/snapshots/targets/brcm2708/bcm2711/openwrt-sdk-brcm2708-bcm2711_gcc-8.3.0_musl.Linux-x86_64.tar.xz
+  wget https://downloads.openwrt.org/snapshots/targets/bcm27xx/bcm2711/openwrt-sdk-bcm27xx-bcm2711_gcc-8.4.0_musl.Linux-x86_64.tar.xz
+```
+
+For the raspberry pi 3 b+:
+
+```
+  wget https://downloads.cdn.openwrt.org/snapshots/targets/bcm27xx/bcm2710/openwrt-sdk-bcm27xx-bcm2710_gcc-8.4.0_musl.Linux-x86_64.tar.xz
 ```
 
 ## Build
@@ -49,8 +55,7 @@ Update the feeds
 Install the massmesh feeds
 
 ```
-  ./scripts/feeds install yggdrasil autoygg-go # for autoygg
-  ./scripts/feeds install mm-cli               # for mm-cli
+  ./scripts/feeds install autoygg-go mm-cli # for the massmesh packages
 ```
 
 Generate a basic .config file. Open menuconfig and then select 'Global build settings' and disable 'Cryptographically sign package lists'. Exit and save config.

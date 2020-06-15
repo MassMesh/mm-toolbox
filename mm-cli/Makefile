@@ -18,7 +18,7 @@ include $(TOPDIR)/rules.mk
 TITLE:=mm-cli
 PKG_NAME:=mm-cli
 PKG_VERSION:=0.0.3
-PKG_RELEASE:=1
+PKG_RELEASE:=3
 
 PYPI_NAME:=$(PKG_NAME)
 PYPI_SOURCE_NAME:=mm-cli
@@ -51,3 +51,5 @@ endef
 
 $(eval $(call Py3Package,python3-mm-cli))
 $(eval $(call BuildPackage,python3-mm-cli))
+$(eval $(call BuildPackage,python3-mm-cli-src))
+
