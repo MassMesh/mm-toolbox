@@ -12,7 +12,7 @@ define Package/luci-app-mm-cli
   SUBMENU:=3. Applications
   TITLE:=GUI for mm-cli package
   PKGARCH:=all
-  DEPENDS:=+python3-mm-cli
+  DEPENDS:=+python3-mm-cli-src
 endef
 
 define Build/Configure
