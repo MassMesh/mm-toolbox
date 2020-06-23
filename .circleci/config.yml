@@ -46,7 +46,7 @@ jobs:
           command: "cd << parameters.openwrt_dir >> && make defconfig && sed -i 's/CONFIG_SIGNED_PACKAGES=y/# CONFIG_SIGNED_PACKAGES is not set/' .config"
       - run:
           name: Build << parameters.community >> << parameters.profile >> << parameters.device >>
-          command: 'cd << parameters.openwrt_dir >> && make -j3'
+          command: 'cd << parameters.openwrt_dir >> && make -j3 V=99'
       - add_ssh_keys:
           fingerprints:
             - "f6:6d:a4:c9:4e:93:86:41:57:7c:70:0c:27:fb:b9:be"
