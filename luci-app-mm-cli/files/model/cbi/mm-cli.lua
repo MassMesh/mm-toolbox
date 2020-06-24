@@ -1,12 +1,14 @@
 -- "mm-cli" here refers to the name of the file in /etc/config
 --
-m = Map("system", translate("Yggdrasil --> Internet Gateway Configuration"),
+m = Map("system", translate("MassMesh: Internet Gateway Configuration"),
          translate("Configure your gateway connection. This gets you to the Internet..."))
 
 -- this refers to a section in the config file.
 --
-s = m:section( NamedSection, "configuration", "gateway", 
-translate("Settings"))
+s = m:section( TypedSection, "configuration", "Gateway: Section Title",
+				    translate("Descriptive sub-text here"))
+
+s.template = "cbi/tblsection"
 
 -- and then the options in that section
 --
