@@ -1,11 +1,11 @@
 -- "mm-cli" here refers to the name of the file in /etc/config
 --
-m = Map("system", translate("MassMesh: Internet Gateway Configuration"),
-         translate("Configure your gateway connection. This gets you to the Internet..."))
+m = Map("system", translate("Internet Gateway Configuration"),
+         translate("Configure a gateway connection to establish a secure tunnel to the Internet through the encrypted Yggdrasil network. You will have to coordinate with a Gateway Operator to obtain their public key and a pair of CKR (crypto-key routing) addresses."))
 
 -- this refers to a section in the config file.
 --
-s = m:section( TypedSection, "gateway", translate("Clearnet Gateway"), translate("System Gateway Settings -- /etc/config/system"))
+s = m:section( TypedSection, "gateway", translate("Gateway Settings"), translate("These live in the /etc/config/system config file."))
 
 s.template = "cbi/tblsection"
 
