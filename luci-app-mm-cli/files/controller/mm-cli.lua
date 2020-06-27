@@ -10,7 +10,7 @@ function index()
 
     -- install this page into the hierarchy under admin -> services
     --
-    page = entry({"admin", "services", "mm-cli"}, cbi("mm-cli"), _("Massmesh"))
+    page = entry({"admin", "Network", "mm-cli"}, cbi("mm-cli"), _("Clearnet Gateway"))
 
     -- the i18n file's base name
     --
