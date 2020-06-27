@@ -5,8 +5,7 @@ m = Map("system", translate("MassMesh: Internet Gateway Configuration"),
 
 -- this refers to a section in the config file.
 --
-s = m:section( NamedSection, "gateway", "gateway",
-translate("System Gateway Settings"))
+s = m:section( TypedSection, "gateway", translate("Clearnet Gateway"), translate("System Gateway Settings -- /etc/config/system"))
 
 s.template = "cbi/tblsection"
 
