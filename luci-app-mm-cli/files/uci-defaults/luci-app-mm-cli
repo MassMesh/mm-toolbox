@@ -1,0 +1,11 @@
+#!/bin/sh
+
+uci -q batch <<-EOF >/dev/null
+         delete ucitrack. at mm-cli[-1]
+         add ucitrack mm-cli
+         set ucitrack. at mm-cli[-1].init=mm-cli
+         commit ucitrack
+EOF
+
+rm -f /tmp/luci-indexcache
+exit 0
