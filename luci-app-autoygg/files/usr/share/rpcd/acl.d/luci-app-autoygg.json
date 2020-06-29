@@ -1,0 +1,14 @@
+{
+        "luci-app-autoygg": {
+                "description": "Grant access to LuCI app autoygg",
+                "read": {
+                        "uci": [ "autoygg" ]
+                },
+                "write": {
+                        "file": {
+                                "/usr/sbin/autoygg-client": [ "exec" ]
+                        },
+                        "uci": [ "autoygg" ]
+                }
+        }
+}

@@ -1,0 +1,21 @@
+{
+	"admin/network/autoygg": {
+		"title": "Internet Gateway (autoygg)",
+		"action": {
+			"type": "firstchild"
+		},
+		"depends": {
+			"acl": [ "luci-app-autoygg" ],
+			"uci": { "autoygg": true }
+		}
+	},
+
+	"admin/network/autoygg/settings": {
+		"title": "Settings",
+		"order": 3,
+		"action": {
+			"type": "view",
+			"path": "autoygg/settings"
+		}
+	}
+}

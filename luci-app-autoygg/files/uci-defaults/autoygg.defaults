@@ -1,0 +1,30 @@
+#!/bin/sh
+
+autoyggConfig="/etc/config/autoygg"
+
+first_boot_genConfig()
+{
+  . /usr/share/libubox/jshn.sh
+  boardcfg=$(ubus call system board)
+  touch ${autoyggConfig}
+  autoygg-client --dumpConfig | autoygguci set
+
+  uci set autoygg.autoygg.yggdrasilInterface = `uci get yggdrasil.yggdrasil.IfName`
+  uci commit autoygg
+}
+
+if [ -e /etc/autoygg/client.yml ]; then
+  echo "config: import config from /etc/autoygg/client.yml to /etc/config/autoygg" | logger -t autoygg
+  touch ${autoyggConfig}
+  cat /etc/autoygg/client.yml | autoygguci set
+  mv /etc/autoygg/client.yml /etc/autoygg/client.yml.bak
+elif [ ! -e ${autoyggConfig} ]; then
+  echo "first_boot: adding NEW config: ${autoyggConfig}" | logger -t autoygg
+
+  first_boot_genConfig
+
+else
+  :
+fi
+
+exit 0
