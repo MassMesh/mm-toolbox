@@ -5,11 +5,10 @@ autoyggConfig="/etc/config/autoygg"
 first_boot_genConfig()
 {
   . /usr/share/libubox/jshn.sh
-  boardcfg=$(ubus call system board)
   touch ${autoyggConfig}
-  autoygg-client --dumpConfig | autoygguci set
+  autoygg-client --dumpConfig --json | autoygguci set
 
-  uci set autoygg.autoygg.yggdrasilInterface = `uci get yggdrasil.yggdrasil.IfName`
+  uci set autoygg.autoygg.yggdrasilinterface=`uci get yggdrasil.yggdrasil.IfName`
   uci commit autoygg
 }
 

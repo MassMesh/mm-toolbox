@@ -11,30 +11,30 @@ UCI = {}
 -- @return table with configuration defaults
 function UCI.defaults()
 	return {
-		Action = "register",
-		AddDefaultGatewayCommand = "ip ro add default via %%ClientGateway%%",
-		AddPeerNullRouteCommand = "ip ro replace blackhole %%Peer%% metric 500",
-		AddPeerRouteCommand = "ip ro add %%Peer%% via %%DefaultGatewayIP%% dev %%DefaultGatewayDevice%%",
-		AddPeerRouteListCommand = "ip ro list %%Peer%% via %%DefaultGatewayIP%% dev %%DefaultGatewayDevice%%",
-		AddTunnelRouteCommand = "ip addr add %%IPAddress%%/%%NetMask%% dev %%YggdrasilInterface%%",
-		Daemon = false,
-		Debug = false,
-		DefaultGatewayDev = "",
-		DefaultGatewayIp = "",
-		DelDefaultgatewaycommand = "ip ro del default via %%ClientGateway%%",
-		DelPeerNullRouteCommand = "ip ro del blackhole %%Peer%% metric 500",
-		DelPeerRouteCommand = "ip ro del %%Peer%%",
-		DelPeerRouteListCommand = "ip ro list %%Peer%%",
-		DelTunnelRouteCommand = "ip addr del %%IPAddress%%/%%NetMask%% dev %%YggdrasilInterface%%",
-		GatewayAddRemoteSubnetCommand = "yggdrasilctl addremotesubnet subnet=%%Subnet%% box_pub_key=%%ClientPublicKey%%",
-		GatewayDelRemoteSubnetCommand = "yggdrasilctl removeremotesubnet subnet=%%Subnet%% box_pub_key=%%ClientPublicKey%%",
-		GatewayHost = "",
-		GatewayPort = "8080",
-		ListTunnelRouteCommand = "ip addr list %%YggdrasilInterface%%",
-		Quiet = false,
-		Shell = "/bin/sh",
-		ShellCommandArg = "-c",
-		YggdrasilInterface = "ygg0"
+		action = "register",
+		adddefaultgatewaycommand = "ip ro add default via %%ClientGateway%%",
+		addpeernullroutecommand = "ip ro replace blackhole %%Peer%% metric 500",
+		addpeerroutecommand = "ip ro add %%Peer%% via %%DefaultGatewayIP%% dev %%DefaultGatewayDevice%%",
+		addpeerroutelistcommand = "ip ro list %%Peer%% via %%DefaultGatewayIP%% dev %%DefaultGatewayDevice%%",
+		addtunnelroutecommand = "ip addr add %%IPAddress%%/%%NetMask%% dev %%YggdrasilInterface%%",
+		daemon = false,
+		debug = false,
+		defaultgatewaydev = "",
+		defaultgatewayip = "",
+		deldefaultgatewaycommand = "ip ro del default via %%ClientGateway%%",
+		delpeernullroutecommand = "ip ro del blackhole %%Peer%% metric 500",
+		delpeerroutecommand = "ip ro del %%Peer%%",
+		delpeerroutelistcommand = "ip ro list %%Peer%%",
+		deltunnelroutecommand = "ip addr del %%IPAddress%%/%%NetMask%% dev %%YggdrasilInterface%%",
+		gatewayaddremotesubnetcommand = "yggdrasilctl addremotesubnet subnet=%%Subnet%% box_pub_key=%%ClientPublicKey%%",
+		gatewaydelremotesubnetcommand = "yggdrasilctl removeremotesubnet subnet=%%Subnet%% box_pub_key=%%ClientPublicKey%%",
+		gatewayhost = "",
+		gatewayport = "8080",
+		listtunnelroutecommand = "ip addr list %%YggdrasilInterface%%",
+		quiet = false,
+		shell = "/bin/sh",
+		shellcommandarg = "-c",
+		yggdrasilinterface = "ygg0"
 	}
 end
 
@@ -48,30 +48,30 @@ function UCI.get()
 	local config = cursor:get_all("autoygg", "autoygg")
 	if not config then return obj end
 
-	obj.Action = config.Action
-	obj.AddDefaultGatewayCommand = config.AddDefaultGatewayCommand
-	obj.AddPeerNullRouteCommand = config.AddPeerNullRouteCommand
-	obj.AddPeerRouteCommand = config.AddPeerRouteCommand
-	obj.AddPeerRouteListCommand = config.AddPeerRouteListCommand
-	obj.AddTunnelRouteCommand = config.AddTunnelRouteCommand
-	obj.Daemon = to_bool(config.Daemon)
-	obj.Debug = to_bool(config.Debug)
-	obj.DefaultGatewayDev = config.DefaultGatewayDev
-	obj.DefaultGatewayIp = config.DefaultGatewayIp
-	obj.DelDefaultgatewaycommand = config.DelDefaultgatewaycommand
-	obj.DelPeerNullRouteCommand = config.DelPeerNullRouteCommand
-	obj.DelPeerRouteCommand = config.DelPeerRouteCommand
-	obj.DelPeerRouteListCommand = config.DelPeerRouteListCommand
-	obj.DelTunnelRouteCommand = config.DelTunnelRouteCommand
-	obj.GatewayAddRemoteSubnetCommand = config.GatewayAddRemoteSubnetCommand
-	obj.GatewayDelRemoteSubnetCommand = config.GatewayDelRemoteSubnetCommand
-	obj.GatewayHost = config.GatewayHost
-	obj.GatewayPort = config.GatewayPort
-	obj.ListTunnelRouteCommand = config.ListTunnelRouteCommand
-	obj.Quiet = to_bool(config.Quiet)
-	obj.Shell = config.Shell
-	obj.ShellCommandArg = config.ShellCommandArg
-	obj.YggdrasilInterface = config.YggdrasilInterface
+	obj.action = config.action
+	obj.adddefaultgatewaycommand = config.adddefaultgatewaycommand
+	obj.addpeernullroutecommand = config.addpeernullroutecommand
+	obj.addpeerroutecommand = config.addpeerroutecommand
+	obj.addpeerroutelistcommand = config.addpeerroutelistcommand
+	obj.addtunnelroutecommand = config.addtunnelroutecommand
+	obj.daemon = to_bool(config.daemon)
+	obj.debug = to_bool(config.debug)
+	obj.defaultgatewaydev = config.defaultgatewaydev
+	obj.defaultgatewayip = config.defaultgatewayip
+	obj.deldefaultgatewaycommand = config.deldefaultgatewaycommand
+	obj.delpeernullroutecommand = config.delpeernullroutecommand
+	obj.delpeerroutecommand = config.delpeerroutecommand
+	obj.delpeerroutelistcommand = config.delpeerroutelistcommand
+	obj.deltunnelroutecommand = config.deltunnelroutecommand
+	obj.gatewayaddremotesubnetcommand = config.gatewayaddremotesubnetcommand
+	obj.gatewaydelremotesubnetcommand = config.gatewaydelremotesubnetcommand
+	obj.gatewayhost = config.gatewayhost
+	obj.gatewayport = config.gatewayport
+	obj.listtunnelroutecommand = config.listtunnelroutecommand
+	obj.quiet = to_bool(config.quiet)
+	obj.shell = config.shell
+	obj.shellcommandarg = config.shellcommandarg
+	obj.yggdrasilinterface = config.yggdrasilinterface
 
 	return obj
 end
@@ -93,30 +93,30 @@ function UCI.set(obj)
 
 
 	cursor:set("autoygg", "autoygg", "autoygg")
-	cursor:set("autoygg", "autoygg", "Action", obj.Action)
-	cursor:set("autoygg", "autoygg", "AddDefaultGatewayCommand", obj.AddDefaultGatewayCommand)
-	cursor:set("autoygg", "autoygg", "AddPeerNullRouteCommand", obj.AddPeerNullRouteCommand)
-	cursor:set("autoygg", "autoygg", "AddPeerRouteCommand", obj.AddPeerRouteCommand)
-	cursor:set("autoygg", "autoygg", "AddPeerRouteListCommand", obj.AddPeerRouteListCommand)
-	cursor:set("autoygg", "autoygg", "AddTunnelRouteCommand", obj.AddTunnelRouteCommand)
-	cursor:set("autoygg", "autoygg", "Daemon", to_int(obj.Daemon))
-	cursor:set("autoygg", "autoygg", "Debug", to_int(obj.Debug))
-	cursor:set("autoygg", "autoygg", "DefaultGatewayDev", obj.DefaultGatewayDev)
-	cursor:set("autoygg", "autoygg", "DefaultGatewayIp", obj.DefaultGatewayIp)
-	cursor:set("autoygg", "autoygg", "DelDefaultgatewaycommand", obj.DelDefaultgatewaycommand)
-	cursor:set("autoygg", "autoygg", "DelPeerNullRouteCommand", obj.DelPeerNullRouteCommand)
-	cursor:set("autoygg", "autoygg", "DelPeerRouteCommand", obj.DelPeerRouteCommand)
-	cursor:set("autoygg", "autoygg", "DelPeerRouteListCommand", obj.DelPeerRouteListCommand)
-	cursor:set("autoygg", "autoygg", "DelTunnelRouteCommand", obj.DelTunnelRouteCommand)
-	cursor:set("autoygg", "autoygg", "GatewayAddRemoteSubnetCommand", obj.GatewayAddRemoteSubnetCommand)
-	cursor:set("autoygg", "autoygg", "GatewayDelRemoteSubnetCommand", obj.GatewayDelRemoteSubnetCommand)
-	cursor:set("autoygg", "autoygg", "GatewayHost", obj.GatewayHost)
-	cursor:set("autoygg", "autoygg", "GatewayPort", obj.GatewayPort)
-	cursor:set("autoygg", "autoygg", "ListTunnelRouteCommand", obj.ListTunnelRouteCommand)
-	cursor:set("autoygg", "autoygg", "Quiet", to_int(obj.Quiet))
-	cursor:set("autoygg", "autoygg", "Shell", obj.Shell)
-	cursor:set("autoygg", "autoygg", "ShellCommandArg", obj.ShellCommandArg)
-	cursor:set("autoygg", "autoygg", "YggdrasilInterface", obj.YggdrasilInterface)
+	cursor:set("autoygg", "autoygg", "action", obj.action)
+	cursor:set("autoygg", "autoygg", "adddefaultgatewaycommand", obj.adddefaultgatewaycommand)
+	cursor:set("autoygg", "autoygg", "addpeernullroutecommand", obj.addpeernullroutecommand)
+	cursor:set("autoygg", "autoygg", "addpeerroutecommand", obj.addpeerroutecommand)
+	cursor:set("autoygg", "autoygg", "addpeerroutelistcommand", obj.addpeerroutelistcommand)
+	cursor:set("autoygg", "autoygg", "addtunnelroutecommand", obj.addtunnelroutecommand)
+	cursor:set("autoygg", "autoygg", "daemon", to_int(obj.daemon))
+	cursor:set("autoygg", "autoygg", "debug", to_int(obj.debug))
+	cursor:set("autoygg", "autoygg", "defaultgatewaydev", obj.defaultgatewaydev)
+	cursor:set("autoygg", "autoygg", "defaultgatewayip", obj.defaultgatewayip)
+	cursor:set("autoygg", "autoygg", "deldefaultgatewaycommand", obj.deldefaultgatewaycommand)
+	cursor:set("autoygg", "autoygg", "delpeernullroutecommand", obj.delpeernullroutecommand)
+	cursor:set("autoygg", "autoygg", "delpeerroutecommand", obj.delpeerroutecommand)
+	cursor:set("autoygg", "autoygg", "delpeerroutelistcommand", obj.delpeerroutelistcommand)
+	cursor:set("autoygg", "autoygg", "deltunnelroutecommand", obj.deltunnelroutecommand)
+	cursor:set("autoygg", "autoygg", "gatewayaddremotesubnetcommand", obj.gatewayaddremotesubnetcommand)
+	cursor:set("autoygg", "autoygg", "gatewaydelremotesubnetcommand", obj.gatewaydelremotesubnetcommand)
+	cursor:set("autoygg", "autoygg", "gatewayhost", obj.gatewayhost)
+	cursor:set("autoygg", "autoygg", "gatewayport", obj.gatewayport)
+	cursor:set("autoygg", "autoygg", "listtunnelroutecommand", obj.listtunnelroutecommand)
+	cursor:set("autoygg", "autoygg", "quiet", to_int(obj.quiet))
+	cursor:set("autoygg", "autoygg", "shell", obj.shell)
+	cursor:set("autoygg", "autoygg", "shellcommandarg", obj.shellcommandarg)
+	cursor:set("autoygg", "autoygg", "yggdrasilinterface", obj.yggdrasilinterface)
 	return cursor:commit("autoygg")
 end
 

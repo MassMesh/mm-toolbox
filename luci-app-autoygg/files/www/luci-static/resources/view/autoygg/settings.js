@@ -11,9 +11,9 @@ return view.extend({
 		s = m.section(form.TypedSection, 'autoygg', _('General settings'));
 		s.anonymous = true;
 
-		s.option(form.Value, "gatewayHost", _("The yggdrasil IPv6 address of your Autoygg gateway"));
-		s.option(form.Value, "gatewayPort", _("The port of your Autoygg gateway"));
-		s.option(form.Value, "yggdrasilInterface", _("Yggdrasil's network interface name"));
+		s.option(form.value, "gatewayhost", _("the yggdrasil ipv6 address of your autoygg gateway"));
+		s.option(form.value, "gatewayport", _("the port of your autoygg gateway"));
+		s.option(form.value, "yggdrasilinterface", _("Yggdrasil's network interface name"));
 
 		return m.render();
 	}
