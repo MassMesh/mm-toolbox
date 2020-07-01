@@ -7,5 +7,9 @@ uci -q batch <<-EOF >/dev/null
          commit ucitrack
 EOF
 
+uci set system.gateway=gateway
+uci set system.gateway.key=' '
+uci set system.gateway.cl_ip=' '
+uci set system.gateway.gw_ip=' '
 rm -f /tmp/luci-indexcache
 exit 0
