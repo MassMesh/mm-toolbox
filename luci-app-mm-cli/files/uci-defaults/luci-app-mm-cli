@@ -11,5 +11,6 @@ uci set system.gateway=gateway
 uci set system.gateway.key=' '
 uci set system.gateway.cl_ip=' '
 uci set system.gateway.gw_ip=' '
+uci commit
 rm -f /tmp/luci-indexcache
 exit 0
