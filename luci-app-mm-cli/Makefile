@@ -29,6 +29,7 @@ define Package/luci-app-mm-cli/install
 	$(CP) ./files/controller/mm-cli.lua $(1)/usr/lib/lua/luci/controller
 	$(CP) ./files/model/cbi/mm-cli.lua  $(1)/usr/lib/lua/luci/model/cbi
 	$(CP) ./files/uci-defaults/luci-app-mm-cli $(1)/etc/uci-defaults
+	$(CP) ./files/uci-defaults/gateway-defaults $(1)/etc/uci-defaults
 endef
 
 define Package/luci-app-mm-cli/postinst
@@ -36,6 +37,9 @@ define Package/luci-app-mm-cli/postinst
 [ -n "$${IPKG_INSTROOT}" ] || {
 	if [ -f /etc/uci-defaults/luci-app-mm-cli ]; then
 		( . /etc/uci-defaults/luci-app-mm-cli ) && rm -f /etc/uci-defaults/luci-app-mm-cli || :
+	fi
+	if [ -f /etc/uci-defaults/gateway-defaults ]; then
+		( . /etc/uci-defaults/gateway-defaults) && rm -f /etc/uci-defaults/gateway-defaults || :
 	fi
 }
 endef
