@@ -10,9 +10,18 @@
 		}
 	},
 
+	"admin/network/autoygg/status": {
+		"title": "Status",
+		"order": 1,
+		"action": {
+			"type": "view",
+			"path": "autoygg/status"
+		}
+	},
+
 	"admin/network/autoygg/settings": {
 		"title": "Settings",
-		"order": 3,
+		"order": 2,
 		"action": {
 			"type": "view",
 			"path": "autoygg/settings"

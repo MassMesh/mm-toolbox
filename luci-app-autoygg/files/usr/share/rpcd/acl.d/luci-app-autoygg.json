@@ -6,7 +6,9 @@
                 },
                 "write": {
                         "file": {
-                                "/usr/sbin/autoygg-client": [ "exec" ]
+                                "/usr/sbin/autoygg-client": [ "exec" ],
+                                "/usr/sbin/autoygguci": [ "exec" ],
+                                "/usr/sbin/yggdrasilctl": [ "exec" ]
                         },
                         "uci": [ "autoygg" ]
                 }
