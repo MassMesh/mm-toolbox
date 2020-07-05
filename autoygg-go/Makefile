@@ -19,6 +19,7 @@ PKG_USE_MIPS16:=0
 
 GO_PKG:=github.com/massmesh/autoygg
 GO_PKG_BUILD_PKG:=github.com/massmesh/autoygg/cmd/.../...
+GO_PKG_LDFLAGS_X:=github.com/massmesh/autoygg/internal.version=v$(PKG_VERSION)
 
 include $(INCLUDE_DIR)/package.mk
 include $(TOPDIR)/feeds/packages/lang/golang/golang-package.mk
