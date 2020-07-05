@@ -6,7 +6,7 @@ PKG_RELEASE:=1
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=https://codeload.github.com/massmesh/autoygg/tar.gz/v$(PKG_VERSION)?
-PKG_HASH:=7c3f651098d2978aa4ce57caf275086f38d66d8012dc417d7fd7d3a6e1e8df4f
+PKG_HASH:=da377605909ef617e75a0be04744136b90c89eb223803d3429f021ecff70312a
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(PKG_VERSION)
 
 PKG_MAINTAINER:=William Fleurant <meshnet@protonmail.com>
