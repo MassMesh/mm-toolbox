@@ -15,6 +15,10 @@ return view.extend({
 		s.option(form.Value, "gatewayport", _("the port of your autoygg gateway"));
 		s.option(form.Value, "yggdrasilinterface", _("Yggdrasil's network interface name"));
 
+		s.option(form.Value, "clientname", _("Your name (optional)"));
+		s.option(form.Value, "clientemail", _("Your e-mail address (optional)"));
+		s.option(form.Value, "clientphone", _("Your phone number (optional)"));
+
 		return m.render();
 	}
 });

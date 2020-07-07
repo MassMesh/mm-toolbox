@@ -15,6 +15,9 @@ function UCI.defaults()
 		gatewayhost = "",
 		gatewayport = "8080",
 		yggdrasilinterface = "ygg0"
+		clientname = ""
+		clientemail = ""
+		clientphone = ""
 	}
 end
 
@@ -64,6 +67,9 @@ function UCI.get()
 	obj.shell = config.shell
 	obj.shellcommandarg = config.shellcommandarg
 	obj.yggdrasilinterface = config.yggdrasilinterface
+	obj.clientname = config.clientname
+	obj.clientemail = config.clientemail
+	obj.clientphone = config.clientphone
 
 	return obj
 end
