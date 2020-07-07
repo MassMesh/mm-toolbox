@@ -14,9 +14,9 @@ function UCI.defaults()
 		daemon = false,
 		gatewayhost = "",
 		gatewayport = "8080",
-		yggdrasilinterface = "ygg0"
-		clientname = ""
-		clientemail = ""
+		yggdrasilinterface = "ygg0",
+		clientname = "",
+		clientemail = "",
 		clientphone = ""
 	}
 end
