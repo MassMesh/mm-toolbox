@@ -181,10 +181,10 @@ function to_bool(int) return int ~= '0' end
 
 function help()
 	print("JSON interface to /etc/config/autoygg\n\nExamples: \
-	autoygguci get > /tmp/etc/autoygg/client.yml \
-	cat /tmp/etc/autoygg/client.yml | autoygguci set \
+	autoygguci get | tee /tmp/autoygg-client.yml \
+	cat /tmp/autoygg-client.yml | autoygguci set \
 	uci changes \
-	autoygguci get | autoygg-client -useconf")
+	autoygguci get | autoygg-client --useConfig")
 end
 
 -- main
