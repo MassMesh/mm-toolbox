@@ -2,7 +2,7 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=luci-app-autoygg
 PKG_VERSION:=0.0.1
-PKG_RELEASE:=1
+PKG_RELEASE:=2
 
 include $(INCLUDE_DIR)/package.mk
 
@@ -35,10 +35,17 @@ define Package/luci-app-autoygg/install
 
 	$(CP) ./files/uci-defaults/autoygg.defaults $(1)/etc/uci-defaults
 
-	$(CP) ./files/usr/share/luci/menu.d/luci-app-autoygg.json $(1)/usr/share/luci/menu.d/luci-app-autoygg.json
-	$(CP) ./files/usr/share/rpcd/acl.d/luci-app-autoygg.json $(1)/usr/share/rpcd/acl.d/luci-app-autoygg.json
+	$(CP) ./files/usr/share/luci/menu.d/luci-app-autoygg.json \
+			 $(1)/usr/share/luci/menu.d/luci-app-autoygg.json
 
-	$(CP) ./files/www/luci-static/resources/view/autoygg/settings.js $(1)/www/luci-static/resources/view/autoygg/settings.js
+	$(CP) ./files/usr/share/rpcd/acl.d/luci-app-autoygg.json \
+			 $(1)/usr/share/rpcd/acl.d/luci-app-autoygg.json
+
+	$(CP) ./files/www/luci-static/resources/view/autoygg/settings.js \
+			 $(1)/www/luci-static/resources/view/autoygg/settings.js
+
+	$(CP) ./files/www/luci-static/resources/view/autoygg/status.js \
+			 $(1)/www/luci-static/resources/view/autoygg/status.js
 endef
 
 define Package/luci-app-autoygg/postinst
