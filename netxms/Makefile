@@ -9,14 +9,14 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=netxms-agent
 PKG_LICENSE=GPL-2.0+
-PKG_VERSION:=2.1-RC1
+PKG_VERSION:=3.4.244
 PKG_RELEASE:=1
 
-PKG_SOURCE_URL:=http://www.netxms.org/download/
-PKG_SOURCE:=netxms-$(PKG_VERSION).tar.gz
-PKG_MD5SUM:=6a48230e9a3d86112d8f5050b1c68f18a2ef5868
+PKG_SOURCE_PROTO:=git
+PKG_SOURCE_URL:=https://github.com/netxms/netxms
+PKG_SOURCE_VERSION:=aa465a0ba2
 
-PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(BUILD_VARIANT)/netxms-$(PKG_VERSION)
+PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(BUILD_VARIANT)/$(PKG_NAME)-$(PKG_VERSION)
 PKG_INSTALL:=1
 PKG_BUILD_PARALLEL:=1
 
@@ -44,7 +44,7 @@ $(call Package/netxms/Default)
 	CATEGORY:=Libraries
 	VARIANT:=$(1)
 	TITLE+= common libraries$(2)
-	DEPENDS:=+libexpat +libpthread +libstdcpp +zlib $(3)
+	DEPENDS:=+libatomic +libexpat +libpthread +libstdcpp +zlib +libpcre +libpcre32 $(3)
 endef
 
 define Package/netxms-base/description
@@ -77,10 +77,13 @@ endif
 define Build/Configure
 	$(call Build/Configure/Default, \
 		--with-agent \
-		--with-client \
 		--disable-64bit \
 		--disable-iconv \
-		--with-internal-libtre \
+		--without-curl \
+		--disable-ssh \
+		--disable-mqtt \
+		--disable-null-free-check \
+		--with-pcre="$(STAGING_DIR)/usr/" \
 		$(if $(CONFIG_NXAGENTD_NOSSL),--disable-encryption,) \
 	)
 endef
@@ -90,10 +93,7 @@ define Package/netxms-base-$(BUILD_VARIANT)/install
 	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/bin/nxencpasswd $(1)/usr/bin/
 	$(INSTALL_DIR) $(1)/usr/lib
 	$(CP) $(PKG_INSTALL_DIR)/usr/lib/libnetxms.so* $(1)/usr/lib/
-	$(CP) $(PKG_INSTALL_DIR)/usr/lib/libnxclient.so* $(1)/usr/lib/
-	$(CP) $(PKG_INSTALL_DIR)/usr/lib/libnxdb.so* $(1)/usr/lib/
-	$(CP) $(PKG_INSTALL_DIR)/usr/lib/libnxsnmp.so* $(1)/usr/lib/
-	$(CP) $(PKG_INSTALL_DIR)/usr/lib/libnxtre.so* $(1)/usr/lib/
+	$(CP) $(PKG_INSTALL_DIR)/usr/lib/libnxjansson.so* $(1)/usr/lib/
 endef
 
 define Package/netxms-agent-$(BUILD_VARIANT)/install
@@ -101,12 +101,12 @@ define Package/netxms-agent-$(BUILD_VARIANT)/install
 	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/bin/nxagentd $(1)/usr/bin/
 	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/bin/nxappget $(1)/usr/bin/
 	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/bin/nxapush $(1)/usr/bin/
-	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/bin/nxevent $(1)/usr/bin/
-	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/bin/nxpush $(1)/usr/bin/
 	$(INSTALL_DIR) $(1)/usr/lib
 	$(CP) $(PKG_INSTALL_DIR)/usr/lib/libnxagent.so* $(1)/usr/lib/
 	$(CP) $(PKG_INSTALL_DIR)/usr/lib/libappagent.so* $(1)/usr/lib/
+	$(CP) $(PKG_INSTALL_DIR)/usr/lib/libnxdb.so* $(1)/usr/lib/
 	$(CP) $(PKG_INSTALL_DIR)/usr/lib/libnxlp.so* $(1)/usr/lib/
+	$(CP) $(PKG_INSTALL_DIR)/usr/lib/libnxsnmp.so* $(1)/usr/lib/
 	$(INSTALL_DIR) $(1)/usr/lib/netxms
 	$(CP) $(PKG_INSTALL_DIR)/usr/lib/netxms/*.nsm $(1)/usr/lib/netxms/
 	$(INSTALL_DIR) $(1)/usr/lib/netxms/dbdrv
