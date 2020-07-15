@@ -1,0 +1,207 @@
+#!/usr/bin/env lua
+
+dkjson = require("dkjson")
+uci	= require("uci")
+
+UCI = {}
+
+--- Return the configuration defaults as a table suitable for JSON output
+--
+-- Mostly taken from autoygg-client --dumpConfig
+-- @return table with configuration defaults
+function UCI.defaults()
+	return {
+		daemon = false,
+		gatewayhost = "",
+		gatewayport = "8080",
+		yggdrasilinterface = "ygg0",
+		clientname = "",
+		clientemail = "",
+		clientphone = ""
+	}
+end
+
+--- Return the autoygg configuration as a table suitable for JSON output
+--
+-- @return table with autoygg configuration
+function UCI.get()
+	local obj = UCI.defaults()
+
+	local cursor = uci.cursor()
+	local config = cursor:get_all("autoygg", "autoygg")
+	if not config then return obj end
+
+	obj.action = config.action
+	obj.adddefaultgatewaycommand = config.adddefaultgatewaycommand
+	obj.addpeernullroutecommand = config.addpeernullroutecommand
+	obj.addpeerroutecommand = config.addpeerroutecommand
+	obj.addpeerroutelistcommand = config.addpeerroutelistcommand
+	obj.addtunnelroutecommand = config.addtunnelroutecommand
+	if config.daemon then
+		obj.daemon = to_bool(config.daemon)
+	else
+		obj.daemon = nil
+	end
+	if config.debug then
+		obj.debug = to_bool(config.debug)
+	else
+		obj.debug = nil
+	end
+	obj.defaultgatewaydev = config.defaultgatewaydev
+	obj.defaultgatewayip = config.defaultgatewayip
+	obj.deldefaultgatewaycommand = config.deldefaultgatewaycommand
+	obj.delpeernullroutecommand = config.delpeernullroutecommand
+	obj.delpeerroutecommand = config.delpeerroutecommand
+	obj.delpeerroutelistcommand = config.delpeerroutelistcommand
+	obj.deltunnelroutecommand = config.deltunnelroutecommand
+	obj.gatewayaddremotesubnetcommand = config.gatewayaddremotesubnetcommand
+	obj.gatewaydelremotesubnetcommand = config.gatewaydelremotesubnetcommand
+	obj.gatewayhost = config.gatewayhost
+	obj.gatewayport = config.gatewayport
+	obj.listtunnelroutecommand = config.listtunnelroutecommand
+	if config.quiet then
+		obj.quiet = to_bool(config.quiet)
+	else
+		obj.quiet = nil
+	end
+	obj.shell = config.shell
+	obj.shellcommandarg = config.shellcommandarg
+	obj.yggdrasilinterface = config.yggdrasilinterface
+	obj.clientname = config.clientname
+	obj.clientemail = config.clientemail
+	obj.clientphone = config.clientphone
+
+	return obj
+end
+
+--- Parse and save updated configuration from JSON input
+--
+-- Transforms general settings into UCI sections, and replaces the UCI config's
+-- contents with them.
+-- @param table JSON input
+-- @return Boolean whether saving succeeded
+function UCI.set(obj)
+	local cursor = uci.cursor()
+
+	if cursor:get_all("autoygg") ~= nil then
+		for i, section in pairs(cursor:get_all("autoygg")) do
+			cursor:delete("autoygg", section[".name"])
+		end
+	end
+
+
+	cursor:set("autoygg", "autoygg", "autoygg")
+	if obj.action then
+		cursor:set("autoygg", "autoygg", "action", obj.action)
+	end
+	if obj.adddefaultgatewaycommand then
+		cursor:set("autoygg", "autoygg", "adddefaultgatewaycommand", obj.adddefaultgatewaycommand)
+	end
+	if obj.addpeernullroutecommand then
+		cursor:set("autoygg", "autoygg", "addpeernullroutecommand", obj.addpeernullroutecommand)
+	end
+	if obj.addpeerroutecommand then
+		cursor:set("autoygg", "autoygg", "addpeerroutecommand", obj.addpeerroutecommand)
+	end
+	if obj.addpeerroutelistcommand then
+		cursor:set("autoygg", "autoygg", "addpeerroutelistcommand", obj.addpeerroutelistcommand)
+	end
+	if obj.addtunnelroutecommand then
+		cursor:set("autoygg", "autoygg", "addtunnelroutecommand", obj.addtunnelroutecommand)
+	end
+	if obj.daemon then
+		cursor:set("autoygg", "autoygg", "daemon", to_int(obj.daemon))
+	end
+	if obj.debug then
+		cursor:set("autoygg", "autoygg", "debug", to_int(obj.debug))
+	end
+	if obj.defaultgatewaydev then
+		cursor:set("autoygg", "autoygg", "defaultgatewaydev", obj.defaultgatewaydev)
+	end
+	if obj.defaultgatewayip then
+		cursor:set("autoygg", "autoygg", "defaultgatewayip", obj.defaultgatewayip)
+	end
+	if obj.deldefaultgatewaycommand then
+		cursor:set("autoygg", "autoygg", "deldefaultgatewaycommand", obj.deldefaultgatewaycommand)
+	end
+	if obj.delpeernullroutecommand then
+		cursor:set("autoygg", "autoygg", "delpeernullroutecommand", obj.delpeernullroutecommand)
+	end
+	if obj.delpeerroutecommand then
+		cursor:set("autoygg", "autoygg", "delpeerroutecommand", obj.delpeerroutecommand)
+	end
+	if obj.delpeerroutelistcommand then
+		cursor:set("autoygg", "autoygg", "delpeerroutelistcommand", obj.delpeerroutelistcommand)
+	end
+	if obj.deltunnelroutecommand then
+		cursor:set("autoygg", "autoygg", "deltunnelroutecommand", obj.deltunnelroutecommand)
+	end
+	if obj.gatewayaddremotesubnetcommand then
+		cursor:set("autoygg", "autoygg", "gatewayaddremotesubnetcommand", obj.gatewayaddremotesubnetcommand)
+	end
+	if obj.gatewaydelremotesubnetcommand then
+		cursor:set("autoygg", "autoygg", "gatewaydelremotesubnetcommand", obj.gatewaydelremotesubnetcommand)
+	end
+	if obj.gatewayhost then
+		cursor:set("autoygg", "autoygg", "gatewayhost", obj.gatewayhost)
+	end
+	if obj.gatewayport then
+		cursor:set("autoygg", "autoygg", "gatewayport", obj.gatewayport)
+	end
+	if obj.listtunnelroutecommand then
+		cursor:set("autoygg", "autoygg", "listtunnelroutecommand", obj.listtunnelroutecommand)
+	end
+	if obj.quiet then
+		cursor:set("autoygg", "autoygg", "quiet", to_int(obj.quiet))
+	end
+	if obj.shell then
+		cursor:set("autoygg", "autoygg", "shell", obj.shell)
+	end
+	if obj.shellcommandarg then
+		cursor:set("autoygg", "autoygg", "shellcommandarg", obj.shellcommandarg)
+	end
+	if obj.yggdrasilinterface then
+		cursor:set("autoygg", "autoygg", "yggdrasilinterface", obj.yggdrasilinterface)
+	end
+	return cursor:commit("autoygg")
+end
+
+function set_values(cursor, section_name, parameter, values)
+	if values == nil then return false end
+
+	for k, v in pairs(values) do
+		local name = cursor:add("autoygg", section_name)
+		cursor:set("autoygg", name, parameter, v)
+	end
+end
+
+function to_int(bool) return bool and '1' or '0' end
+
+function to_bool(int) return int ~= '0' end
+
+function help()
+	print("JSON interface to /etc/config/autoygg\n\nExamples: \
+	autoygguci get | tee /tmp/autoygg-client.yml \
+	cat /tmp/autoygg-client.yml | autoygguci set \
+	uci changes \
+	autoygguci get | autoygg-client --useConfig")
+end
+
+-- main
+
+if arg[1] == "get" then
+	local json = dkjson.encode(UCI.get(), { indent = true })
+	print(json)
+elseif arg[1] == "set" then
+	local json = io.stdin:read("*a")
+	local obj, pos, err = dkjson.decode(json, 1, nil)
+
+	if obj then
+		UCI.set(obj)
+	else
+		print("dkjson: " .. err)
+		os.exit(1)
+	end
+else
+	help()
+end

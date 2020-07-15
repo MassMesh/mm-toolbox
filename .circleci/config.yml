@@ -40,13 +40,13 @@ jobs:
           command: 'curl -O << parameters.openwrt_url >> && ls -laF *tar.xz && md5sum *tar.xz && tar xJf *tar.xz'
       - run:
           name: add massmesh source to feeds file
-          command: 'cd << parameters.openwrt_dir >> && echo "src-git massmesh https://github.com/massmesh/mm-toolbox.git;mm-agent-hiro-protagonist" >> feeds.conf.default && ./scripts/feeds update && ./scripts/feeds install yggdrasil autoygg-go && ./scripts/feeds install mm-cli argh netaddr netxms'
+          command: 'cd << parameters.openwrt_dir >> && echo "src-git massmesh https://github.com/massmesh/mm-toolbox.git;mm-agent-hiro-protagonist" >> feeds.conf.default && ./scripts/feeds update && ./scripts/feeds install yggdrasil autoygg-go && ./scripts/feeds install mm-cli argh netaddr luci-app-mm-cli luci-app-autoygg netxms'
       - run:
           name: tweak config
           command: "cd << parameters.openwrt_dir >> && make defconfig && sed -i 's/CONFIG_SIGNED_PACKAGES=y/# CONFIG_SIGNED_PACKAGES is not set/' .config"
       - run:
           name: Build << parameters.community >> << parameters.profile >> << parameters.device >>
-          command: 'cd << parameters.openwrt_dir >> && make -j3'
+          command: 'cd << parameters.openwrt_dir >> && make -j3 V=99'
       - add_ssh_keys:
           fingerprints:
             - "f6:6d:a4:c9:4e:93:86:41:57:7c:70:0c:27:fb:b9:be"

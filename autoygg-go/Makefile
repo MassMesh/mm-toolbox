@@ -1,12 +1,12 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=autoygg
-PKG_VERSION:=0.1.0
+PKG_VERSION:=0.1.4
 PKG_RELEASE:=1
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=https://codeload.github.com/massmesh/autoygg/tar.gz/v$(PKG_VERSION)?
-PKG_HASH:=10d1fd4a5c2236731f35388253b7bde128f826de7888fd09431d619073570041
+PKG_HASH:=ebd2bbc61bed8abd428e5841e8bb9b25adc853fe8e61e92e737476c8e1809b4d
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(PKG_VERSION)
 
 PKG_MAINTAINER:=William Fleurant <meshnet@protonmail.com>
@@ -19,6 +19,7 @@ PKG_USE_MIPS16:=0
 
 GO_PKG:=github.com/massmesh/autoygg
 GO_PKG_BUILD_PKG:=github.com/massmesh/autoygg/cmd/.../...
+GO_PKG_LDFLAGS_X:=github.com/massmesh/autoygg/internal.version=v$(PKG_VERSION)
 
 include $(INCLUDE_DIR)/package.mk
 include $(TOPDIR)/feeds/packages/lang/golang/golang-package.mk
