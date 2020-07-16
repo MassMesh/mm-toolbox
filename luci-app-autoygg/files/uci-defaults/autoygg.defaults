@@ -17,7 +17,7 @@ if [ -e /etc/autoygg/client.yml ]; then
   touch ${autoyggConfig}
   cat /etc/autoygg/client.yml | autoygguci set
   mv /etc/autoygg/client.yml /etc/autoygg/client.yml.bak
-elif [ ! -e ${autoyggConfig} ]; then
+elif [ ! -e ${autoyggConfig} ] || [ ! -s ${autoyggConfig} ]; then
   echo "first_boot: adding NEW config: ${autoyggConfig}" | logger -t autoygg
 
   first_boot_genConfig
