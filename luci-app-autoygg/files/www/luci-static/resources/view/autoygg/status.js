@@ -124,16 +124,25 @@ function update_client_status(view,obj) {
   }
 }
 
+function show(v1, v2) {
+  if (v1 !== undefined) {
+    return v2
+  } else {
+    return ""
+  }
+}
+
+
 function update_gateway_info(view,obj) {
-	view.querySelector('#gatewayowner').innerText = obj.GatewayOwner;
-	view.querySelector('#description').innerText = obj.Description;
-	view.querySelector('#gatewayinfourl').innerHTML = "<a href=\"" + obj.GatewayInfoURL + "\">" + obj.GatewayInfoURL + "</a>";
-	view.querySelector('#softwareversion').innerText = obj.SoftwareVersion;
-	view.querySelector('#network').innerText = obj.Network;
-	view.querySelector('#location').innerText = obj.Location;
-	view.querySelector('#requireregistration').innerText = obj.RequireRegistration;
-	view.querySelector('#requireapproval').innerText = obj.RequireApproval;
-	view.querySelector('#accesslistenabled').innerText = obj.AccessListEnabled;
+	view.querySelector('#gatewayowner').innerText = show(obj.GatewayOwner,obj.GatewayOwner);
+	view.querySelector('#description').innerText = show(obj.Description,obj.Description);
+	view.querySelector('#gatewayinfourl').innerHTML = show(obj.GatewayInfoURL,"<a href=\"" + obj.GatewayInfoURL + "\">" + obj.GatewayInfoURL + "</a>");
+	view.querySelector('#softwareversion').innerText = show(obj.SoftwareVersion,obj.SoftwareVersion);
+	view.querySelector('#network').innerText = show(obj.Network,obj.Network);
+	view.querySelector('#location').innerText = show(obj.Location,obj.Location);
+	view.querySelector('#requireregistration').innerText = show(obj.RequireRegistration,obj.RequireRegistration);
+	view.querySelector('#requireapproval').innerText = show(obj.RequireApproval,obj.RequireApproval);
+	view.querySelector('#accesslistenabled').innerText = show(obj.AccessListEnabled,obj.AccessListEnabled);
 }
 
 function reload_info(view) {
