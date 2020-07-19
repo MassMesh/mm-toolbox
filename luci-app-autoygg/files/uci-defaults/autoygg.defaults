@@ -8,7 +8,13 @@ first_boot_genConfig()
   touch ${autoyggConfig}
   autoygg-client --dumpConfig --json | autoygguci set
 
-  uci set autoygg.autoygg.yggdrasilinterface=`uci get yggdrasil.yggdrasil.IfName`
+  yggIfName=`uci get yggdrasil.yggdrasil.IfName`
+  if [ "$yggIfName" == "" ]; then
+    # This happens when yggdrasil and autoygg are installed at the same time,
+    # despite autoygg's dependency on yggdrasil...
+    yggIfName='ygg0'
+  fi
+  uci set autoygg.autoygg.yggdrasilinterface="$yggIfName"
   uci commit autoygg
 }
 
