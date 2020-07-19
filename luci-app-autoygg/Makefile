@@ -1,7 +1,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=luci-app-autoygg
-PKG_VERSION:=0.0.5
+PKG_VERSION:=0.0.6
 PKG_RELEASE:=1
 
 include $(INCLUDE_DIR)/package.mk
@@ -27,6 +27,7 @@ define Package/luci-app-autoygg/install
 		$(1)/usr/share/rpcd/acl.d \
 		$(1)/www/luci-static/resources/view/autoygg \
 		$(1)/etc/uci-defaults \
+		$(1)/etc/init.d \
 		$(1)/usr/sbin
 
 	$(INSTALL_BIN) \
@@ -46,6 +47,10 @@ define Package/luci-app-autoygg/install
 
 	$(CP) ./files/www/luci-static/resources/view/autoygg/status.js \
 			 $(1)/www/luci-static/resources/view/autoygg/status.js
+
+	$(INSTALL_BIN) \
+		./files/autoygg-client.init \
+		$(1)/etc/init.d/autoygg-client
 endef
 
 define Package/luci-app-autoygg/postinst

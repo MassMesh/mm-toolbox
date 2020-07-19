@@ -6,7 +6,8 @@
                 },
                 "write": {
                         "file": {
-                                "/usr/sbin/autoygg-client": [ "exec" ]
+                                "/usr/sbin/autoygg-client": [ "exec" ],
+                                "/etc/init.d/autoygg-client": [ "exec" ]
                         },
                         "uci": [ "autoygg" ]
                 }

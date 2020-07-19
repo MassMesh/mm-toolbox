@@ -88,13 +88,13 @@ function autoygg_toggle(id) {
   var action, newButtonLabel;
 
   if (view.querySelector('#state').innerText != "connected") {
-    action = "--action=register";
+    action = "start";
     id.srcElement.innerText = "Connecting...";
   } else {
-    action = "--action=release";
+    action = "stop";
     id.srcElement.innerText = "Disconnecting...";
   }
-	fs.exec("/usr/sbin/autoygg-client", ["--useUCI",action]).then(function(res){
+	fs.exec("/etc/init.d/autoygg-client", [action]).then(function(res){
     if (res && res.code === 0) {
       reload_client_status(view);
     }
