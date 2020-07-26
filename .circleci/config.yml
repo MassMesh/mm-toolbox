@@ -37,7 +37,7 @@ jobs:
           key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
       - run:
           name: get openwrt
-          command: 'curl -O << parameters.openwrt_url >> && ls -laF *tar.xz && md5sum *tar.xz && tar xJf *tar.xz'
+          command: 'curl -OL << parameters.openwrt_url >> && ls -laF *tar.xz && md5sum *tar.xz && tar xJf *tar.xz'
       - run:
           name: add massmesh source to feeds file
           command: 'cd << parameters.openwrt_dir >> && echo "src-git massmesh https://github.com/massmesh/mm-toolbox.git" >> feeds.conf.default && ./scripts/feeds update && ./scripts/feeds install yggdrasil autoygg-go && ./scripts/feeds install mm-cli argh netaddr luci-app-mm-cli luci-app-autoygg'
