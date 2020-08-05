@@ -11,6 +11,7 @@ function init_view() {
 	var table_data = {
 		"State": "state",
 		"Desired State": "desiredstate",
+		"Software Version": "clientversion",
 		"Error": "error",
 		"Autoygg Gateway IPv6 address": "gatewayhost",
 		"Autoygg Gateway Port": "gatewayport",
@@ -105,6 +106,7 @@ function autoygg_toggle(id) {
 function update_client_status(view,obj) {
 	view.querySelector('#state').innerText = obj.state;
 	view.querySelector('#desiredstate').innerText = obj.desiredstate;
+	view.querySelector('#clientversion').innerText = obj.clientversion;
 	view.querySelector('#error').innerText = obj.error;
 	view.querySelector('#error').innerText = obj.error;
 	view.querySelector('#gatewayhost').innerText = obj.gatewayhost;
