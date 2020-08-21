@@ -52,6 +52,9 @@ define Package/autoygg-go/install
 	$(INSTALL_DIR) \
 		$(1)/usr/sbin
 
+	$(INSTALL_DIR) \
+		$(1)/etc/hotplug.d/iface/
+
 	$(INSTALL_BIN) \
 		$(GO_PKG_BUILD_BIN_DIR)/autoygg-client \
 		$(1)/usr/sbin
@@ -59,6 +62,10 @@ define Package/autoygg-go/install
 	$(INSTALL_BIN) \
 		$(GO_PKG_BUILD_BIN_DIR)/autoygg-server \
 		$(1)/usr/sbin
+
+	$(INSTALL_BIN) \
+		./files/hotplug_iface \
+		$(1)/etc/hotplug.d/iface/05-autoygg-client
 endef
 
 $(eval $(call GoBinPackage,autoygg-go))

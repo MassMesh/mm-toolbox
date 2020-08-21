@@ -1,0 +1,11 @@
+#!/bin/sh
+
+case "$ACTION" in
+    ifup)
+        logger "Restarting autoygg-client because of ifup event on interface $INTERFACE"
+        /etc/init.d/autoygg-client restart
+        ;;
+    ifdown)
+        # Ignore, for now
+        ;;
+esac
