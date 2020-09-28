@@ -163,6 +163,9 @@ function UCI.set(obj)
 	if obj.yggdrasilinterface then
 		cursor:set("autoygg", "autoygg", "yggdrasilinterface", obj.yggdrasilinterface)
 	end
+	if obj.gateway then
+		cursor:set("autoygg", "autoygg", "gateway", obj.gateway)
+	end
 	return cursor:commit("autoygg")
 end
 
