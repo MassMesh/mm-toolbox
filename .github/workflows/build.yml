@@ -1,0 +1,35 @@
+name: Build packages
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    name: Build ${{ matrix.arch }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        arch:
+          - x86_64
+          - mips_24kc
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Build packages
+        uses: openwrt/gh-action-sdk@v1
+        env:
+          ARCH: ${{ matrix.arch }}
+          FEEDNAME: "mm_toolbox"
+          IGNORE_ERRORS: "n m y"
+          KEY_BUILD: "${{ secrets.KEY_BUILD }}"
+
+      - name: Upload packages to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3.7.0-8
+        with:
+          publish_dir: bin/packages/${{ matrix.arch }}/mm_toolbox/
+          destination_dir: ${{ matrix.arch }}
+          #deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
+          #external_repository: libremesh/lime-feed
