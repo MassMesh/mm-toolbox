@@ -1,13 +1,17 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=autoygg
-PKG_VERSION:=0.1.11
+PKG_VERSION:=0.2.0-no-null-routes
 PKG_RELEASE:=1
 
-PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
-PKG_SOURCE_URL:=https://codeload.github.com/massmesh/autoygg/tar.gz/v$(PKG_VERSION)?
-PKG_HASH:=947bf237ed0fea5b3408ba17d672bb6c74571d2a36aa1e01677cffe4abae93d7
+#PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
+#PKG_SOURCE_URL:=https://codeload.github.com/massmesh/autoygg/tar.gz/v$(PKG_VERSION)?
+#PKG_HASH:=947bf237ed0fea5b3408ba17d672bb6c74571d2a36aa1e01677cffe4abae93d7
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(PKG_VERSION)
+
+PKG_SOURCE_PROTO:=git
+PKG_SOURCE_URL:=https://github.com/massmesh/autoygg.git
+PKG_SOURCE_VERSION:=a78ea762a421211aa4d4be946ec4b078327a5dfb
 
 PKG_MAINTAINER:=William Fleurant <meshnet@protonmail.com>
 PKG_LICENSE:=GPL-3.0
