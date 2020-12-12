@@ -1,12 +1,12 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=autoygg
-PKG_VERSION:=0.1.11
+PKG_VERSION:=0.2.0
 PKG_RELEASE:=1
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=https://codeload.github.com/massmesh/autoygg/tar.gz/v$(PKG_VERSION)?
-PKG_HASH:=947bf237ed0fea5b3408ba17d672bb6c74571d2a36aa1e01677cffe4abae93d7
+PKG_HASH:=5957bfcad7c13b7a60f55419fcb26169b76a60926c1f79ccbf3d6e4621d42060
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(PKG_VERSION)
 
 PKG_MAINTAINER:=William Fleurant <meshnet@protonmail.com>
