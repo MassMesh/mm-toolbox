@@ -7,7 +7,8 @@
                 "write": {
                         "file": {
                                 "/usr/sbin/autoygg-client": [ "exec" ],
-                                "/etc/init.d/autoygg-client": [ "exec" ]
+                                "/etc/init.d/autoygg-client": [ "exec" ],
+				"/usr/bin/curl": [ "exec" ]
                         },
                         "uci": [ "autoygg" ]
                 }
