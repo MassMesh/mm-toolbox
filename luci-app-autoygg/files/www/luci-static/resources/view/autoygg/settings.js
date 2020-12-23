@@ -1,33 +1,146 @@
 'use strict';
 'require view';
+'require fs';
 'require form';
+'require ui';
+'require uci';
+
+function init_view(saved_gateways) {
+	var view = document.createElement("div");
+
+	var gateway_config_title = document.createElement("h2");
+	gateway_config_title.innerText = _("Gateway Selection");
+
+	var gateway_config = document.createElement("div");
+	gateway_config.setAttribute("class", "table");
+
+	var gateway_config_data = {
+		"Host": "gatewayhost",
+		"Port": "gatewayport",
+		"Interface": "yggdrasilinterface"
+	}
+
+	Object.keys(gateway_config_data).forEach(function(k) {
+		var tr = document.createElement("div");
+		tr.setAttribute("class", "tr");
+		var td1 = document.createElement("div");
+		td1.setAttribute("Class", "td left");
+		td1.textContent = k;
+		var td3 = document.createElement("div");
+		td3.setAttribute("class", "td left");
+		td3.id = gateway_config_data[k];
+
+		var config_value = uci.get('autoygg', 'autoygg', gateway_config_data[k]);
+		td3.textContent = config_value;
+
+		tr.appendChild(td1);
+		tr.appendChild(td3);
+		gateway_config.appendChild(tr);
+	});
+	
+	view.appendChild(gateway_config_title);
+	view.appendChild(gateway_config);
+
+	var gateway_list_title = document.createElement("h2");
+	gateway_list_title.innerText = _("Saved Gateways");
+
+	var gateway_list = document.createElement("div");
+	gateway_list.setAttribute("class", "table");
+
+	saved_gateways.forEach(function(gateway) {
+		var tr = document.createElement("div");
+		tr.setAttribute("class", "tr");
+
+		Object.keys(gateway).forEach(function(k) {
+			var td = document.createElement("div");
+			td.setAttribute("class", "td left");
+			td.setAttribute("id", k);
+			if (k === 'status') {
+				if (gateway[k].code === 0) {
+					td.textContent = _("Online");
+					td.setAttribute("class", "td left success");
+				}
+				else {
+					td.textContent = _("Unreachable");
+					td.setAttribute("class", "td left danger");
+				}
+			}
+			else {
+				td.textContent = gateway[k];
+			}
+			tr.appendChild(td);
+		});
+
+		var td2 = document.createElement("div");
+		td2.setAttribute("class", "td right");
+		var info_btn = document.createElement("button");
+		info_btn.setAttribute("class", "btn info");
+		info_btn.innerText = _("Info");
+		td2.appendChild(info_btn);
+		tr.appendChild(td2);
+		
+		var td3 = document.createElement("div");
+		td3.setAttribute("class", "td right");
+		var select_btn = document.createElement("button");
+		select_btn.setAttribute("class", "btn primary");
+		select_btn.innerText = _("Select");
+		select_btn.addEventListener('click', async () => {
+			console.log(`Selected [${gateway.yggdrasilip}]:${gateway.port}`)
+			uci.set('autoygg', 'autoygg', 'gatewayhost', gateway.yggdrasilip)
+			console.log(`${uci.get('autoygg', 'autoygg', 'gatewayhost')}`)
+			uci.set('autoygg', 'autoygg', 'gatewayport', gateway.port)
+			console.log(`UCI changes: ${JSON.stringify(await uci.changes())}`)
+			uci.save()
+			console.log(uci.changes())
+		});
+		td3.appendChild(select_btn);
+		tr.appendChild(td3);
+
+		gateway_list.appendChild(tr);
+	});
+
+	view.appendChild(gateway_list_title);
+	view.appendChild(gateway_list);
+	return view;
+}
+
+var gateway_statuses = new Promise((resolve, reject) => {
+
+	let saved_gateways = [
+		{
+			"yggdrasilip": "201:506e:60d6:bd66:e35c:606:4883:ea9a",
+			"port": 8080
+		},
+		{
+			"yggdrasilip": "201:8c48:42ef:21d6:beff:6cff:499c:2b99",
+			"port": 8080
+		},
+		{
+			"yggdrasilip": "200:647d:66b6:7fca:b5a:56ea:9c1c:30c7",
+			"port": 8080
+		}
+	];
+
+	saved_gateways.forEach(function(gateway) {
+		var info_url = "[" + gateway["yggdrasilip"] + "]:" + gateway["port"] + "/info"
+		L.resolveDefault(fs.exec("/usr/bin/curl",  [info_url]), null).then(function(status) {
+			gateway.status = status;
+		});
+	});
+
+	return setTimeout(resolve, 100, saved_gateways);
+});
 
 return view.extend({
-	render: function() {
-		var m, s, o;
-
-		m = new form.Map('autoygg', 'Autoygg-client');
-
-		s = m.section(form.TypedSection, 'autoygg', _('Gateway Selection'));
-		s.anonymous = true;
-
-		s.option(form.Value, "gatewayhost", _("Gateway Yggdrasil IPv6"));
-		s.option(form.Value, "gatewayport", _("Gateway Port (default 8080)"));
-
-		s = m.section(form.TypedSection, 'autoygg', _('Personal Settings'));
-		s.anonymous = true;
-
-		s.option(form.Value, "clientname", _("Your name (optional)"));
-		s.option(form.Value, "clientemail", _("Your e-mail address (optional)"));
-		s.option(form.Value, "clientphone", _("Your phone number (optional)"));
-		s.option(form.Value, "yggdrasilinterface", _("Yggdrasil Network Interface"));
-
-		s = m.section(form.TableSection, 'saved_gateway', _('Saved Gateways'));
-		s.option(form.Value, "host", _("Host"));
-		s.option(form.Value, "port", _("Port (default 8080)"));
-		s.anonymous = true;
-		s.addremove = true;
-
-		return m.render();
+	load: function() {
+		return Promise.all([
+			L.uci.load('autoygg'),
+			L.resolveDefault(gateway_statuses, null)
+		]);
+	},
+	render: function(info) {
+		console.log(info);
+		var view = init_view(info[1]);
+		return view;
 	}
 });
