@@ -76,6 +76,56 @@ function init_view(saved_gateways) {
 		var info_btn = document.createElement("button");
 		info_btn.setAttribute("class", "btn info");
 		info_btn.innerText = _("Info");
+		info_btn.addEventListener('click', async() => {
+			const info = JSON.parse(gateway.status.stdout);
+			console.log(`${JSON.stringify(info)}`);
+			if (info != undefined)
+				var modalContent = document.createElement("div");
+				var modalTitle = document.createElement("h2");
+				modalTitle.textContent = _("Gateway Information");
+				modalContent.appendChild(modalTitle);
+
+				var modalDescription = document.createElement("h4");
+				modalDescription.setAttribute("class", "cbi-value-description");
+				modalDescription.textContent = _(gateway.yggdrasilip);
+				modalContent.appendChild(modalDescription);
+				
+				var infoTableContainer = document.createElement("div");
+				infoTableContainer.setAttribute("class", "cbi-map");
+				
+				var infoTable = document.createElement("div");
+				infoTable.setAttribute("class", "table");
+				Object.keys(info).forEach((k) => {
+					var tr = document.createElement("div");
+					tr.setAttribute("class", "tr");
+					var td1 = document.createElement("div");
+					td1.setAttribute("class", "td left");
+					td1.textContent = _(k)
+					var td2 = document.createElement("div");
+					td2.setAttribute("class", "td left");
+					td2.textContent = _(info[k]);
+					tr.appendChild(td1);
+					tr.appendChild(td2);
+					infoTable.appendChild(tr);
+				});
+
+				infoTableContainer.appendChild(infoTable);
+				modalContent.appendChild(infoTableContainer);
+				
+				var modalFooter = document.createElement("div");
+				modalFooter.setAttribute("class", "footer right");
+				modalFooter.setAttribute("style", "margin-top:1em");
+				var cancel_btn = document.createElement("button");
+				cancel_btn.setAttribute("class", "btn info");
+				cancel_btn.innerText = _("Cancel");
+				cancel_btn.addEventListener('click', () => {
+					ui.hideModal();
+				});
+				modalFooter.appendChild(cancel_btn);
+				modalContent.appendChild(modalFooter);
+
+				ui.showModal(modalContent);
+		});
 		td2.appendChild(info_btn);
 		tr.appendChild(td2);
 		
@@ -85,13 +135,10 @@ function init_view(saved_gateways) {
 		select_btn.setAttribute("class", "btn primary");
 		select_btn.innerText = _("Select");
 		select_btn.addEventListener('click', async () => {
-			console.log(`Selected [${gateway.yggdrasilip}]:${gateway.port}`)
-			uci.set('autoygg', 'autoygg', 'gatewayhost', gateway.yggdrasilip)
-			console.log(`${uci.get('autoygg', 'autoygg', 'gatewayhost')}`)
-			uci.set('autoygg', 'autoygg', 'gatewayport', gateway.port)
-			console.log(`UCI changes: ${JSON.stringify(await uci.changes())}`)
-			uci.save()
-			console.log(uci.changes())
+			uci.set('autoygg', 'autoygg', 'gatewayhost', gateway.yggdrasilip);
+			uci.set('autoygg', 'autoygg', 'gatewayport', gateway.port);
+			uci.save();
+			ui.addNotification("Gateway Changed", "A new gateway has been selected. To start using this gateway, click 'Save & Apply'");
 		});
 		td3.appendChild(select_btn);
 		tr.appendChild(td3);
