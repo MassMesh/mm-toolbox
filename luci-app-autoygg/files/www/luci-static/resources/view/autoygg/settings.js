@@ -13,6 +13,7 @@ function init_view(saved_gateways) {
 
 	var gateway_config = document.createElement("div");
 	gateway_config.setAttribute("class", "table");
+	gateway_config.setAttribute("id", "gatewayconfig");
 
 	var gateway_config_data = {
 		"Host": "gatewayhost",
@@ -135,10 +136,22 @@ function init_view(saved_gateways) {
 		select_btn.setAttribute("class", "btn primary");
 		select_btn.innerText = _("Select");
 		select_btn.addEventListener('click', async () => {
-			uci.set('autoygg', 'autoygg', 'gatewayhost', gateway.yggdrasilip);
-			uci.set('autoygg', 'autoygg', 'gatewayport', gateway.port);
-			uci.save();
-			ui.addNotification("Gateway Changed", "A new gateway has been selected. To start using this gateway, click 'Save & Apply'");
+			if (gateway.yggdrasilip !== uci.get('autoygg', 'autoygg', 'gatewayhost')) {
+				uci.set('autoygg', 'autoygg', 'gatewayhost', gateway.yggdrasilip);
+				uci.set('autoygg', 'autoygg', 'gatewayport', gateway.port);
+				uci.save();
+				ui.addNotification("Gateway Changed", `To begin using the new gateway, click 'Save & Apply' first. (New gateway: ${gateway.yggdrasilip})`, "warning");
+				var host = document.getElementById('gatewayhost').innerText;
+				document.getElementById('gatewayhost').innerText = host + ` ➡️ ${gateway.yggdrasilip}`;
+
+				var port = document.getElementById('gatewayport').innerText;
+				document.getElementById('gatewayport').innerText = port + ` ➡️ ${gateway.port}`;
+				
+				document.getElementById('gatewayconfig').setAttribute('class', 'warning');
+			}
+			else {
+				ui.addNotification("Oops!", "You are already using that gateway. Nothing to do.");
+			}
 		});
 		td3.appendChild(select_btn);
 		tr.appendChild(td3);
