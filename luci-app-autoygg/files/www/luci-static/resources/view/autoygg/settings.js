@@ -17,7 +17,7 @@ function init_view() {
   gateways.setAttribute("class", "table"); gateways.id = "autoygg-gateways";
   var tr = document.createElement("tr");
   tr.setAttribute("class", "tr table-titles");
-  ["Address", "Port", "Status", "", ""].forEach(function(t) {
+  ["Address", "Description", "Port", "Status", "", ""].forEach(function(t) {
     var th = document.createElement("th"); th.setAttribute("class", "th nowrap left");
     th.innerText = t;
     tr.appendChild(th);
@@ -30,30 +30,24 @@ function init_view() {
 }
 
 var gateway_statuses = new Promise((resolve, reject) => {
-
-  let saved_gateways = [
-    {
-      "yggdrasilip": "201:506e:60d6:bd66:e35c:606:4883:ea9a",
-      "port": 8080
-    },
-    {
-      "yggdrasilip": "201:8c48:42ef:21d6:beff:6cff:499c:2b99",
-      "port": 8080
-    },
-    {
-      "yggdrasilip": "200:647d:66b6:7fca:b5a:56ea:9c1c:30c7",
-      "port": 8080
+  let savedGateways;
+  return resolve(L.resolveDefault(fs.read("/etc/autoygg-gateways.json"), '{ "gateways": [] }').then(function(savedGatewaysRaw) {
+    if (savedGatewaysRaw === '{ "gateways": [] }') {
+      ui.addNotification("Gateways file not found", `The /etc/autoygg-gateways.json file was not found, please install a package that supplies that file (e.g. 'massmesh-gateways')`, "warning");
     }
-  ];
 
-  saved_gateways.forEach(function(gateway) {
-    var info_url = "[" + gateway["yggdrasilip"] + "]:" + gateway["port"] + "/info"
-    L.resolveDefault(fs.exec("/usr/bin/curl",  [info_url]), null).then(function(status) {
-      gateway.status = status;
+    const savedGatewaysJSON = JSON.parse(savedGatewaysRaw);
+    savedGateways = savedGatewaysJSON["gateways"];
+
+    let promiseArr = savedGateways.map(function(gateway) {
+      var info_url = "[" + gateway["yggdrasilip"] + "]:" + gateway["port"] + "/info"
+      return L.resolveDefault(fs.exec("/usr/bin/curl",  [info_url]), null).then(function(status) {
+        gateway.status = status;
+      });
     });
-  });
 
-  return setTimeout(resolve, 100, saved_gateways);
+    return Promise.all(promiseArr).then( function() { return savedGateways });
+  }));
 });
 
 return view.extend({
@@ -84,13 +78,13 @@ return view.extend({
       s.option(form.Value, "clientphone", _("Your phone number (optional)"));
 
       m.render().then(function(result) { view.appendChild(result); });
-      console.log(s);
 
       var table = view.querySelector('#autoygg-gateways');
       Object.keys(saved_gateways).forEach(function(i) {
         var gateway = saved_gateways[i];
         var row = table.insertRow(-1);
         row.insertCell(-1).textContent = gateway.yggdrasilip;
+        row.insertCell(-1).textContent = gateway.comment;
         row.insertCell(-1).textContent = gateway.port;
         var td = row.insertCell(-1)
         if (saved_gateways[i] && gateway.status.code === 0) {
