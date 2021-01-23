@@ -3,7 +3,7 @@
     { 
       "yggdrasilip": "201:506e:60d6:bd66:e35c:606:4883:ea9a",
       "port": 8080,
-      "comment": "Mass Mesh production gateway 1 (Digital Ocean)"
+      "description": "Mass Mesh production gateway 1 (Digital Ocean)"
     },
     {
       "yggdrasilip": "201:8c48:42ef:21d6:beff:6cff:499c:2b99",

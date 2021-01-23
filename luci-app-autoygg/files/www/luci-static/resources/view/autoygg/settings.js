@@ -84,7 +84,7 @@ return view.extend({
         var gateway = saved_gateways[i];
         var row = table.insertRow(-1);
         row.insertCell(-1).textContent = gateway.yggdrasilip;
-        row.insertCell(-1).textContent = gateway.comment;
+        row.insertCell(-1).textContent = gateway.description;
         row.insertCell(-1).textContent = gateway.port;
         var td = row.insertCell(-1)
         if (saved_gateways[i] && gateway.status.code === 0) {
