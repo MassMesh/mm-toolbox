@@ -6,8 +6,9 @@
       "description": "Mass Mesh production gateway 1 (Digital Ocean)"
     },
     {
-      "yggdrasilip": "201:8c48:42ef:21d6:beff:6cff:499c:2b99",
-      "port": 8080
+      "yggdrasilip": "200:647d:66b6:7fca:b5a:56ea:9c1c:30c7",
+      "port": 9090,
+      "description": "Telekom testing node (Mullvad VPN)"
     },
     {
       "yggdrasilip": "200:647d:66b6:7fca:b5a:56ea:9c1c:30c7",
