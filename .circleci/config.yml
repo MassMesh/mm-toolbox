@@ -40,7 +40,7 @@ jobs:
           command: 'curl -OL << parameters.openwrt_url >> && ls -laF *tar.xz && md5sum *tar.xz && tar xJf *tar.xz'
       - run:
           name: add massmesh source to feeds file
-          command: 'cd << parameters.openwrt_dir >> && echo "src-git massmesh https://github.com/massmesh/mm-toolbox.git;${CIRCLE_BRANCH}" >> feeds.conf.default && ./scripts/feeds update && ./scripts/feeds install autoygg-go && ./scripts/feeds install mm-cli argh netaddr luci-app-autoygg'
+          command: 'cd << parameters.openwrt_dir >> && echo "src-git massmesh https://github.com/massmesh/mm-toolbox.git;${CIRCLE_BRANCH}" >> feeds.conf.default && ./scripts/feeds update && ./scripts/feeds install autoygg-go && ./scripts/feeds install mm-cli argh netaddr luci-app-autoygg massmesh-gateways'
       - run:
           name: tweak config
           command: "cd << parameters.openwrt_dir >> && make defconfig && sed -i 's/CONFIG_SIGNED_PACKAGES=y/# CONFIG_SIGNED_PACKAGES is not set/' .config"
