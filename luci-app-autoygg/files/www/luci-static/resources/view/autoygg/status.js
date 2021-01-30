@@ -95,11 +95,11 @@ function autoygg_toggle(id) {
     action = "stop";
     id.srcElement.innerText = "Disconnecting...";
   }
-	fs.exec("/etc/init.d/autoygg-client", [action]).then(function(res){
-    if (res && res.code === 0) {
-      reload_client_status(view);
-    }
-  });
+  // It takes a little while for autoygg-client to do its thing after it returns from the action call.
+  // We have a 5 second refresh timer for the status info, so don't bother with a 'then' function here
+  // to try to update the state view faster; it will show the wrong info anyway before autoygg-client
+  // is really done.
+  fs.exec("/etc/init.d/autoygg-client", [action])
   return;
 }
 

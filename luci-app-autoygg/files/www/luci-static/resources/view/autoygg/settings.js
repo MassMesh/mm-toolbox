@@ -41,7 +41,7 @@ var gateway_statuses = new Promise((resolve, reject) => {
 
     let promiseArr = savedGateways.map(function(gateway) {
       var info_url = "[" + gateway["yggdrasilip"] + "]:" + gateway["port"] + "/info"
-      return L.resolveDefault(fs.exec("/usr/bin/curl",  [info_url]), null).then(function(status) {
+      return L.resolveDefault(fs.exec("/usr/bin/curl", ["--connect-timeout", "1", info_url]), '{}').then(function(status) {
         gateway.status = status;
       });
     });
