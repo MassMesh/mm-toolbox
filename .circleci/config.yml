@@ -74,7 +74,7 @@ workflows:
           device: rpi-4
           arch: aarch64_cortex-a72
           openwrt_url: https://downloads.openwrt.org/snapshots/targets/bcm27xx/bcm2711/openwrt-sdk-bcm27xx-bcm2711_gcc-10.3.0_musl.Linux-x86_64.tar.xz
-          openwrt_dir: openwrt-sdk-bcm27xx-bcm2711_gcc-8.4.0_musl.Linux-x86_64
+          openwrt_dir: openwrt-sdk-bcm27xx-bcm2711_gcc-10.3.0_musl.Linux-x86_64
           requires:
             - checkout_code
       - build:
@@ -84,7 +84,7 @@ workflows:
           device: apu2
           arch: x86_64
           openwrt_url: https://downloads.openwrt.org/snapshots/targets/x86/64/openwrt-sdk-x86-64_gcc-10.3.0_musl.Linux-x86_64.tar.xz
-          openwrt_dir: openwrt-sdk-x86-64_gcc-8.4.0_musl.Linux-x86_64
+          openwrt_dir: openwrt-sdk-x86-64_gcc-10.3.0_musl.Linux-x86_64
           requires:
             - checkout_code
       - build:
@@ -94,6 +94,6 @@ workflows:
           device: rpi
           arch: aarch64_cortex-a53
           openwrt_url: https://downloads.cdn.openwrt.org/snapshots/targets/bcm27xx/bcm2710/openwrt-sdk-bcm27xx-bcm2710_gcc-10.3.0_musl.Linux-x86_64.tar.xz
-          openwrt_dir: openwrt-sdk-bcm27xx-bcm2710_gcc-8.4.0_musl.Linux-x86_64
+          openwrt_dir: openwrt-sdk-bcm27xx-bcm2710_gcc-10.3.0_musl.Linux-x86_64
           requires:
             - checkout_code
