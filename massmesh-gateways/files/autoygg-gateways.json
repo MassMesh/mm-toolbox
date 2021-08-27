@@ -1,6 +1,6 @@
-{ 
-  "gateways" : [ 
-    { 
+{
+  "gateways" : [
+    {
       "yggdrasilip": "201:506e:60d6:bd66:e35c:606:4883:ea9a",
       "port": 8080,
       "description": "Mass Mesh production gateway 1 (Digital Ocean)"
@@ -13,6 +13,11 @@
     {
       "yggdrasilip": "200:647d:66b6:7fca:b5a:56ea:9c1c:30c7",
       "port": 8080
+    },
+    {
+      "yggdrasilip": "200:83a1:3b1a:e7af:4b46:6169:8435:9280",
+      "port": 8080,
+      "description": "A free and anonymous mesh gateway run on a $5 DigitalOcean droplet and Mullvad VPN connection (Stephen Smith <stephen304@gmail.com>)"
     }
   ]
 }
