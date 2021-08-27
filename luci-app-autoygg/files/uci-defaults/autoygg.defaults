@@ -32,4 +32,23 @@ else
   :
 fi
 
+# create the tunnel network interface
+uci -q batch <<-EOF >/dev/null
+  set network.autoygg=interface
+  set network.autoygg.device=autoygg
+  set network.autoygg.proto=none
+EOF
+uci commit network
+
+# check if autoygg is already in the yggdrasil zone
+haystack="$(uci get firewall.yggdrasil.network)"
+needle="autoygg"
+if [[ "$haystack" != "*$needle*" ]]; then
+  # add autoygg interface to yggdrasil zone
+  uci -q batch <<-EOF >/dev/null
+    add_list firewall.yggdrasil.network=autoygg
+EOF
+  uci commit firewall
+fi
+
 exit 0
