@@ -1,18 +1,9 @@
 {
   "gateways" : [
     {
-      "yggdrasilip": "201:506e:60d6:bd66:e35c:606:4883:ea9a",
+      "yggdrasilip": "203:7fe2:2946:3dee:4ce3:9493:2a93:82c3",
       "port": 8080,
       "description": "Mass Mesh production gateway 1 (Digital Ocean)"
-    },
-    {
-      "yggdrasilip": "200:647d:66b6:7fca:b5a:56ea:9c1c:30c7",
-      "port": 9090,
-      "description": "Telekom testing node (Mullvad VPN)"
-    },
-    {
-      "yggdrasilip": "200:647d:66b6:7fca:b5a:56ea:9c1c:30c7",
-      "port": 8080
     },
     {
       "yggdrasilip": "200:83a1:3b1a:e7af:4b46:6169:8435:9280",
