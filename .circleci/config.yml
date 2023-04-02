@@ -54,13 +54,13 @@ jobs:
           fingerprints:
             - "f6:6d:a4:c9:4e:93:86:41:57:7c:70:0c:27:fb:b9:be"
       - deploy:
-          name: "Scp files to downloads.massmesh.net"
+          name: "Scp files to download.massmesh.org"
           command: |
             cd << parameters.openwrt_dir >>
-            export TMPDIR=`ssh -o "StrictHostKeyChecking=no" uploader@downloads.massmesh.net mktemp -d -p /home/uploader/package-uploads ci.XXXXXXXX`
-            ssh -o "StrictHostKeyChecking=no" uploader@downloads.massmesh.net mkdir -p $TMPDIR/<< parameters.device >>/
-            scp -o "StrictHostKeyChecking=no" -pr bin/packages/<< parameters.arch >>/massmesh/*.ipk uploader@downloads.massmesh.net:$TMPDIR/<< parameters.device >>/
-            ssh -o "StrictHostKeyChecking=no" uploader@downloads.massmesh.net touch $TMPDIR/<< parameters.device >>.arch.<< parameters.arch >> $TMPDIR/<< parameters.device >>.profile.<< parameters.profile >> $TMPDIR/<< parameters.device >>.branch.${CIRCLE_BRANCH} $TMPDIR/<< parameters.device >>.uploaded
+            export TMPDIR=`ssh -o "StrictHostKeyChecking=no" meshdownloads@download.massmesh.org mktemp -d -p package-uploads ci.XXXXXXXX`
+            ssh -o "StrictHostKeyChecking=no" meshdownloads@download.massmesh.org mkdir -p $TMPDIR/<< parameters.device >>/
+            scp -o "StrictHostKeyChecking=no" -pr bin/packages/<< parameters.arch >>/massmesh/*.ipk meshdownloads@download.massmesh.org:$TMPDIR/<< parameters.device >>/
+            ssh -o "StrictHostKeyChecking=no" meshdownloads@download.massmesh.org touch $TMPDIR/<< parameters.device >>.arch.<< parameters.arch >> $TMPDIR/<< parameters.device >>.profile.<< parameters.profile >> $TMPDIR/<< parameters.device >>.branch.${CIRCLE_BRANCH} $TMPDIR/<< parameters.device >>.uploaded
 
 workflows:
   version: 2
